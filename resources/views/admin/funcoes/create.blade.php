@@ -8,7 +8,7 @@
         @csrf
             <div class="form-group">
                 <div class="form-group">
-                    <label for="name_fc">Nome da funcão</label>
+                    <label for="name_fc">Funcão</label>
                     <input type="text" name="name_fc" class="form-control" placeholder="Digite uma função...">
                 </div>
                 <br>

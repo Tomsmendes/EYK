@@ -2,46 +2,43 @@
 
 @section('content')
     <div class="container mt-5">
-        <h1>Editar Usuário</h1>
+        <h1>Editar Curso</h1>
         <hr>
-        <form action="{{ route('users.update', ['id' => $users->id]) }}" method="POST" enctype="multipart/form-data"> 
+        <form action="{{ route('cursos.update', ['id' => $cursos->id]) }}" method="POST" enctype="multipart/form-data"> 
         @csrf
         @method('PUT')
             <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" name="name" value="{{ $users->name }}" class="form-control" placeholder="Digite um nome...">
+                <label for="category">Categoria</label>
+                <input type="text" name="category" value="{{ $cursos->category }}" class="form-control" placeholder="Digite uma Categoria...">
             </div>
             <br>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" value="{{ $users->email }}" class="form-control" placeholder="Digite um email...">
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Digite uma Password...">
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="fc_id">Função</label>
-                <select name="fc_id" class="form-control">
-                    @foreach($funcaos as $funcao)
-                        <option value="{{ $funcao->id }}" {{ $users->fc_id == $funcao->id ? 'selected' : '' }}>
-                            {{ $funcao->name_fc }}
-                        </option>
-                    @endforeach
+                <label for="status">Função</label>
+                <select name="status" class="form-control">
+                    <option value="draft">Rascunho</option>
+                    <option value="published">Publicado</option>
                 </select>
             </div>
             <br>
             <div class="form-group">
-                <label for="photo">Foto:</label>
-                <input type="file" name="photo" accept=".png, .jpg, .jpeg" id="photoInput" onchange="previewImage(event)">
+                <label for="price">Preço</label>
+                <input type="number" step="0.01" name="price" value="{{ $cursos->price }}" class="form-control" placeholder="Digite um Preço...">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="duration">Duração</label>
+                <input type="text"  name="duration" value="{{ $cursos->duration }}" class="form-control" placeholder="Digite a Duração...">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="thumbnail">Foto:</label>
+                <input type="file" name="thumbnail" accept=".png, .jpg, .jpeg" id="photoInput" onchange="previewImage(event)">
             </div>
             
             <img id="photoPreview" 
-                src="{{ url('/uploads/'.$users->photo) }}" 
+                src="{{ url('/uploads/'.$cursos->thumbnail) }}" 
                 alt="Pré-visualização da imagem" 
-                style="display: {{ $users->photo ? 'block' : 'none' }}; width: 150px; height: 150px; margin-top: 10px;">
+                style="display: {{ $cursos->thumbnail ? 'block' : 'none' }}; width: 150px; height: 150px; margin-top: 10px;">
             
             <br>
             <div class="form-group">
@@ -67,3 +64,5 @@
         }
     }
 </script>
+
+

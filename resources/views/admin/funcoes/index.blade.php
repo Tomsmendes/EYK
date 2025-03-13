@@ -33,7 +33,7 @@
                         <form action="{{  route('funcoes.delete', ['id'=>$funcao->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" >Eliminar</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza?')">Eliminar</button>
                         </form>
                     </th>
                 </tr>

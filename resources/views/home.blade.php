@@ -120,7 +120,7 @@
         <!-- Botões de Entrar e Registrar -->
         <div class="mt-4">
             @guest
-                <a href="#" class="btn btn-custom">Entrar</a>
+                <a href="{{ Route('users.index') }}" class="btn btn-custom">Entrar</a>
                 <a href="{{ route('users.create') }}" class="btn btn-custom">Registrar</a>
             @else
                 <h2>Olá, {{ Auth::user()->name }}!</h2>

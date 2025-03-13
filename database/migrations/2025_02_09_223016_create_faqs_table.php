@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('question');
             $table->text('answer');
-            $table->string('category')->nullable();
+            $table->string('category_f')->nullable();
             $table->integer('order')->nullable();
             $table->timestamps();
         });

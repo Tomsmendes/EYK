@@ -28,7 +28,7 @@
                 <tr>
                     <th>{{ $video->id}}</th>
                     <th>{{ $video->vd_name}}</th>
-                    <th>{{ $video->url}}</th>
+                    <th><a href="{{ $video->url}}">{{ $video->url}}</a></th>
                     <th>{{ $video->vd_descricao}}</th>
                     <th class="d-flex">
                         <a href="{{  route('videos.edit', ['id'=>$video->id], ) }}" class="btn btn-primary me-2" >Editar</a>

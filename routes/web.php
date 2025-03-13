@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CursoController;
+use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\funcaocontroller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -34,6 +36,24 @@ Route::prefix('videos')->group(function(){
     Route::get('/{id}/edit', [Videocontroller::class, 'edit'])->where('id', '[0-9]+')->name('videos.edit');
     Route::put('/{id}', [Videocontroller::class, 'update'])->where('id', '[0-9]+')->name('videos.update');
     Route::delete('/{id}', [Videocontroller::class, 'destroy'])->where('id', '[0-9]+')->name('videos.delete');
+});
+
+Route::prefix('cursos')->group(function(){
+    Route::get('/', [CursoController::class, 'index'])->name('cursos.index');
+    Route::get('/create', [CursoController::class, 'create'])->name('cursos.create');
+    Route::post('/', [CursoController::class, 'store'])->name('cursos.store');
+    Route::get('/{id}/edit', [CursoController::class, 'edit'])->where('id', '[0-9]+')->name('cursos.edit');
+    Route::put('/{id}', [CursoController::class, 'update'])->where('id', '[0-9]+')->name('cursos.update');
+    Route::delete('/{id}', [CursoController::class, 'destroy'])->where('id', '[0-9]+')->name('cursos.delete');
+});
+
+Route::prefix('faqs')->group(function(){
+    Route::get('/', [FaqsController::class, 'index'])->name('faqs.index');
+    Route::get('/create', [FaqsController::class, 'create'])->name('faqs.create');
+    Route::post('/', [FaqsController::class, 'store'])->name('faqs.store');
+    Route::get('/{id}/edit', [FaqsController::class, 'edit'])->where('id', '[0-9]+')->name('faqs.edit');
+    Route::put('/{id}', [FaqsController::class, 'update'])->where('id', '[0-9]+')->name('faqs.update');
+    Route::delete('/{id}', [FaqsController::class, 'destroy'])->where('id', '[0-9]+')->name('faqs.delete');
 });
 
 

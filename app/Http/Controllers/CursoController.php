@@ -10,12 +10,12 @@ class CursoController extends Controller
     public function index()
     {
         $cursos = Curso::all();
-        return view('cursos.index', compact('cursos'));
+        return view('admin.cursos.index', compact('cursos'));
     }
 
     public function create()
     {
-        return view('cursos.create');
+        return view('admin.cursos.create');
     }
 
     public function store(Request $request)
@@ -33,9 +33,9 @@ class CursoController extends Controller
         // Upload de imagem
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
-            $file_name = time() . '_' . $file->getClientOriginalName();
+            $file_name = time() . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $file_name);
-            $data['thumbnail'] = 'uploads/' . $file_name;
+            $data['thumbnail'] = $file_name;
         }
 
         Curso::create($data);
@@ -43,18 +43,22 @@ class CursoController extends Controller
         return redirect()->route('cursos.index')->with('success', 'Curso criado com sucesso!');
     }
 
-    public function show(Curso $curso)
+   /* public function show(Curso $curso)
     {
-        return view('cursos.show', compact('curso'));
+        return view('admin.cursos.show', compact('curso'));
+    }*/
+
+    public function edit($id)
+    {
+        $cursos = Curso::where('id',$id)->first();
+
+        return view('admin.cursos.edit', compact('cursos'));
     }
 
-    public function edit(Curso $curso)
+    public function update(Request $request, $id)
     {
-        return view('cursos.edit', compact('curso'));
-    }
-
-    public function update(Request $request, Curso $curso)
-    {
+        $curso = Curso::findOrFail($id); 
+    
         $request->validate([
             'category' => 'required|string',
             'status' => 'required|in:published,draft',
@@ -62,31 +66,33 @@ class CursoController extends Controller
             'price' => 'nullable|numeric',
             'duration' => 'nullable|string',
         ]);
-
-        $data = $request->all();
-
-        // Upload de nova imagem e remoção da antiga
+    
+        $data = [
+            'category' => $request->category,
+            'status' => $request->status,
+            'price' => $request->price,
+            'duration' => $request->duration,
+        ];
+    
         if ($request->hasFile('thumbnail')) {
             if ($curso->thumbnail && file_exists(public_path($curso->thumbnail))) {
                 unlink(public_path($curso->thumbnail));
             }
+    
             $file = $request->file('thumbnail');
-            $file_name = time() . '_' . $file->getClientOriginalName();
+            $file_name = time() . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $file_name);
-            $data['thumbnail'] = 'uploads/' . $file_name;
+            $data['thumbnail'] = $file_name;
         }
-
+    
         $curso->update($data);
 
         return redirect()->route('cursos.index')->with('success', 'Curso atualizado com sucesso!');
     }
 
-    public function destroy(Curso $curso)
+    public function destroy($id)
     {
-        if ($curso->thumbnail && file_exists(public_path($curso->thumbnail))) {
-            unlink(public_path($curso->thumbnail));
-        }
-
+        $curso = Curso::where('id',$id)->first();
         $curso->delete();
 
         return redirect()->route('cursos.index')->with('success', 'Curso deletado com sucesso!');

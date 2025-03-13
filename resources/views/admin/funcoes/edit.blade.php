@@ -9,7 +9,7 @@
         @method('PUT')
             <div class="form-group">
                 <div class="form-group">
-                    <label for="name_fc">Nome da função</label>
+                    <label for="name_fc">Função</label>
                     <input type="text" name="name_fc" value="{{ $funcoes->name_fc }}" class="form-control" placeholder="Digite uma função...">
                 </div>
                 <br>
