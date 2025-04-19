@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Funcao;
 use Illuminate\Http\Request;
 
-class funcaocontroller extends Controller
+class FuncaoController extends Controller
 {
     public function index()
     {
@@ -13,49 +13,33 @@ class funcaocontroller extends Controller
         return view('admin.funcoes.index', compact('funcoes'));
     }
 
-    public function create()
-    {
-        return view('admin.funcoes.create');
-    }
-
     public function store(Request $request)
     {
-        Funcao::create($request->all());
+        $validated = $request->validate([
+            'name_fc' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+        ]);
 
-       return redirect()->route('funcoes.index');
+        Funcao::create($validated);
+
+        return redirect()->route('funcoes.index')->with('success', 'Função criada com sucesso!');
     }
 
-
-    public function edit(string $id)
+    public function update(Request $request, Funcao $funcao)
     {
-        $funcoes = Funcao::where('id',$id)->first();
-        
-        if(!empty($funcoes))
-        {
-            return view('admin.funcoes.edit', compact('funcoes'));
-        }
-        else
-        {
-            return redirect()->route('funcoes.index');
-        }
+        $validated = $request->validate([
+            'name_fc' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+        ]);
+
+        $funcao->update($validated);
+
+        return redirect()->route('funcoes.index')->with('success', 'Função atualizada com sucesso!');
     }
 
-    public function update(Request $request, string $id)
+    public function destroy(Funcao $funcao)
     {
-        $data = [
-            'name_fc' => $request->name_fc,
-            'descricao' => $request->descricao,
-        ];
-        Funcao::where('id',$id)->update($data);
-
-        return redirect()->route('funcoes.index');
-    }
-
-    function destroy(string $id)
-    {
-        $funcoes = Funcao::where('id',$id)->first();
-        $funcoes->delete();
-
+        $funcao->delete();
         return redirect()->route('funcoes.index')->with('success', 'Função excluída com sucesso!');
     }
 }

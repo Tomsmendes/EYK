@@ -121,7 +121,7 @@
         <div class="mt-4">
             @guest
                 <a href="{{ Route('users.index') }}" class="btn btn-custom">Entrar</a>
-                <a href="{{ route('users.create') }}" class="btn btn-custom">Registrar</a>
+                <a href="{{ route('users.index') }}" class="btn btn-custom">Registrar</a>
             @else
                 <h2>Olá, {{ Auth::user()->name }}!</h2>
                 <a href="{{ route('admin.student.user.index') }}" class="btn btn-success">Dashboard</a>

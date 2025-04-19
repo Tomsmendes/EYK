@@ -5,19 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Questionario extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'aula_id',
-        'url',
-        'vd_name',
-        'vd_descricao'
+        'qt_name',
+        'qt_descricao'
     ];
 
     public function aula()
     {
         return $this->belongsTo(Aula::class);
+    }
+
+    public function perguntas()
+    {
+        return $this->hasMany(Pergunta::class);
     }
 }

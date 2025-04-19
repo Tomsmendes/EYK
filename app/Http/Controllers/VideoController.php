@@ -2,71 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
+use App\Models\Aula;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
-class Videocontroller extends Controller
+class VideoController extends Controller
 {
     public function index()
     {
-        $data['videos'] = Video::all();
-
-        /*$data['users'] = User::join('funcaos', 'users.funcao_id', '=', 'funcaos.id')->
+        $data['videos'] = Video::join('aulas', 'videos.aula_id', '=', 'aulas.id')->
         select(
-            'users.*',
-            'funcaos.fc_name as f_nome'
-        )->get();*/
+            'videos.*',
+            'aulas.title as a_nome'
+        )->get();
 
-        
+        $data ['aulas'] = Aula::all();
+
         return view('admin.videos.index', $data);
     }
 
-    public function create()
+    public function store(Request $request, Curso $curso, Aula $aula)
     {
-        $data['users'] = Video::all();
+    
+        $request->validate([
+            'vd_name' => 'required|string|max:255',
+            'url' => 'required|url',
+            'vd_descricao' => 'nullable|string',
+            'aula_id' => 'required',
+        ]);
 
-        return view('admin.videos.create', $data); 
+        $video = new Video();
+        $video->vd_name = $request->vd_name;
+        $video->url = $request->url;
+        $video->vd_descricao = $request->vd_descricao;
+        $video->aula_id = $request->aula_id;
+        $video->save();
+
+        Session::flash('success', 'Vídeo criado com sucesso!');
+        return redirect()->route('videos.index', [$curso, $aula]);
     }
 
-
-    public function store(Request $request)
+    public function update(Request $request, Curso $curso, Aula $aula, Video $video)
     {
-       Video::create($request->all());
+        $request->validate([
+            'vd_name' => 'required|string|max:255',
+            'url' => 'required|url',
+            'vd_descricao' => 'nullable|string',
+            'aula_id' => 'required|exists:aulas,id',
+        ]);
 
-       return redirect()->route('videos.index');
-    }
-
-    public function edit($id)
-    {
-        $videos = Video::where('id',$id)->first();
-        
-        if(!empty($videos))
-        {
-            return view('admin.videos.edit', compact('videos'));
-        }
-        else
-        {
-            return redirect()->route('videos.index');
-        }
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = [
+        $video->update([
             'vd_name' => $request->vd_name,
             'url' => $request->url,
             'vd_descricao' => $request->vd_descricao,
-        ];
-        Video::where('id',$id)->update($data);
+            'aula_id' => $request->aula_id,
+        ]);
 
-        return redirect()->route('videos.index');
+        Session::flash('success', 'Vídeo atualizado com sucesso!');
+        return redirect()->route('videos.index', [$curso, $aula]);
     }
 
-    public function destroy($id)
+    public function destroy(Curso $curso, Aula $aula, Video $video)
     {
-        $users = Video::where('id',$id)->first();
-        $users->delete();
+        $video->delete();
+        Session::flash('success', 'Vídeo excluído com sucesso!');
+        return redirect()->route('videos.index', [$curso, $aula]);
+    }
 
-        return redirect()->route('videos.index')->with('success', 'Usuário excluído com sucesso!');
+    public function indexNonNested()
+    {
+        Session::flash('error', 'Selecione um curso e uma aula para ver os vídeos.');
+        return redirect()->route('cursos.index');
     }
 }

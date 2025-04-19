@@ -17,4 +17,8 @@ class User extends Authenticatable
         'photo',
     ];
 
+    public function funcao()
+    {
+        return $this->belongsTo(Funcao::class, 'fc_id');
+    }
 }

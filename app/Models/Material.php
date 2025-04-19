@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Material extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'aula_id',
         'url',
-        'vd_name',
-        'vd_descricao'
+        'mt_descricao',
+        'mt_name'
     ];
 
     public function aula()

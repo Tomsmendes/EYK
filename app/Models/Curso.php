@@ -10,7 +10,23 @@ class Curso extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description', 'category', 'status', 'published_at',
-        'thumbnail', 'price', 'duration'
+        'description',
+        'category',
+        'status',
+        'published_at',
+        'thumbnail',
+        'price',
+        'duration'
     ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'price' => 'decimal:2',
+        'duration' => 'integer'
+    ];
+
+    public function aulas()
+    {
+        return $this->hasMany(Aula::class);
+    }
 }

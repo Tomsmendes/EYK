@@ -2,40 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Funcao;
 use App\Models\User;
-use Illuminate\Contracts\Session\Session;
+use App\Models\Funcao;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function home()
-    {
-        return view('home');
-    }
-
     public function index()
     {
-        //$data['users'] = User::all();
-
         $data['users'] = User::join('funcaos', 'users.fc_id', '=', 'funcaos.id')->
         select(
             'users.*',
             'funcaos.name_fc as f_nome'
         )->get();
 
-        
+        $data ['funcoes'] = funcao::all();
+
         return view('admin.users.index', $data);
     }
-
-    public function create()
-    {
-        $data ['funcaos'] = funcao::all();
-
-        return view('admin.users.create', $data); 
-    }
-
 
     public function store(Request $request)
     {
@@ -65,32 +51,14 @@ class UserController extends Controller
         $result = $insert->save();
 
         //Session::flash('Success', 'User registred successfully');
-        return redirect()->route('users.index');
-    }
-    
-
-    public function edit($id)
-    {
-        $users = User::where('id',$id)->first();
-        $funcaos = funcao::all();
-        
-        if(!empty($users))
-        {
-            return view('admin.users.edit', compact('users', 'funcaos'));
-        }
-        else
-        {
-            return redirect()->route('users.index');
-        }
+        return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::findOrFail($id); 
-    
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id, 
+            'email' => 'required|email|unique:users,email,' . $user->id, 
             'password' => 'nullable|min:6', 
             'fc_id' => 'required',
             'photo' => 'nullable|mimes:png,jpg,jpeg|max:2048'
@@ -107,28 +75,29 @@ class UserController extends Controller
         }
     
         if ($request->hasFile('photo')) {
-            if ($user->photo && file_exists(public_path($user->photo))) {
-                unlink(public_path($user->photo));
+            if ($user->photo && file_exists(public_path('uploads/' . $user->photo))) {
+                unlink(public_path('uploads/' . $user->photo));
             }
     
             $file = $request->file('photo');
-            $file_name = time() . $file->getClientOriginalName();
+            $file_name = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $file_name);
             $data['photo'] = $file_name;
         }
     
         $user->update($data);
     
-        return redirect()->route('users.index');
-    } 
+        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
+    }
+    
 
-
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $users = User::where('id',$id)->first();
-        $users->delete();
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
+        $user->delete();
 
         return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
     }
-
 }
