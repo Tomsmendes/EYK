@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->date('data');
             $table->text('descricao')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

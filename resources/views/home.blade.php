@@ -120,12 +120,12 @@
         <!-- Botões de Entrar e Registrar -->
         <div class="mt-4">
             @guest
-                <a href="{{ Route('users.index') }}" class="btn btn-custom">Entrar</a>
+                <a href="{{ Route('login') }}" class="btn btn-custom">Entrar</a>
                 <a href="{{ route('users.index') }}" class="btn btn-custom">Registrar</a>
             @else
-                <h2>Olá, {{ Auth::user()->name }}!</h2>
-                <a href="{{ route('admin.student.user.index') }}" class="btn btn-success">Dashboard</a>
-                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                <h2>Olá, {{ Auth::user()->vc_nome }}!</h2>
+                <a href="{{ route('user.all') }}" class="btn btn-success">Dashboard</a>
+                <form action="#" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-danger">Sair</button>
                 </form>

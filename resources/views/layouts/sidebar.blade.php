@@ -2,18 +2,9 @@
     <h2 class="text-center mt-3 text-white">EYK</h2>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('home') }}">
-                <i class="fa fa-home"></i> Início
-            </a>
-        </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('users.index') }}">
+            <a class="nav-link text-white" href="{{ route('user.all') }}">
                 <i class="fa fa-users"></i> Usuários
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('funcoes.index') }}">
-                <i class="fa fa-briefcase"></i> Funções
             </a>
         </li>
         <li class="nav-item">
@@ -49,6 +40,16 @@
         <li class="nav-item">
             <a class="nav-link text-white" href="{{ route('respostas.index') }}">
                 <i class="fa fa-check-square"></i> Respostas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="{{ route('ofensivas.index') }}">
+                <i class="fa fa-check-square"></i> Ofensiva
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="{{ route('faqs.index') }}">
+                <i class="fa fa-check-square"></i> Faqs
             </a>
         </li>
     </ul>
