@@ -119,3 +119,69 @@
     </script>
 </body>
 </html>
+                <!-- Informações do Usuário Logado -->
+                @auth
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="showPhoto">
+                            @if (Auth::user()->photo)
+                                <img src="{{ url('/Uploads/' . Auth::user()->photo) }}" alt="Foto de {{ Auth::user()->vc_nome }}" class="img-thumbnail">
+                            @else
+                                <img src="{{ url('/Uploads/default.png') }}" alt="Imagem padrão" class="img-thumbnail">
+                            @endif
+                        </div>
+                        <div class="text-start">
+                            <small class="d-block">{{ Auth::user()->vc_nome }}</small>
+                            <small class="text-muted">{{ Auth::user()->email }}</small>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Configurações</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('auth.logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Sair
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                @else
+                <a href="{{ route('login') }}" class="btn btn-outline-primary">Entrar</a>
+                @endauth
+            </div>
+        </nav>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <div class="p-4">
+            @yield('content')
+        </div>
+
+        <footer>
+        <p>&copy; 2024 Projeto EYK - Todos os direitos reservados</p>
+    </footer>
+    </div>
+
+    <style>
+footer {
+            color: gray;
+            padding: 20px;
+            text-align: center;
+            margin-top: 150px;
+
+        }
+
+    .showPhoto img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    </style>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

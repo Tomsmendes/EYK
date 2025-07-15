@@ -23,7 +23,7 @@ class RespostaController extends Controller
         $data['perguntas'] = Pergunta::all();
 
         // Retornando a view com os dados
-        return view('admin.respostas.index', $data);
+        return view('Site.Pages.respostas.index', $data);
     }
 
     public function store(Request $request, Curso $curso, Aula $aula, Questionario $questionario, Pergunta $pergunta)

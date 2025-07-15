@@ -20,7 +20,7 @@ class QuestionarioController extends Controller
 
         $data ['aulas'] = Aula::all();
 
-        return view('admin.questionarios.index', $data);
+        return view('Site.Pages.questionarios.index', $data);
     }
 
     public function store(Request $request, Curso $curso, Aula $aula)

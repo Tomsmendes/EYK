@@ -15,4 +15,11 @@ class RoleMiddleware
 
         return redirect('/')->with('error', 'Acesso negado');
     }
+
+    protected function redirectTo($request)
+    {
+        if (! $request->expectsJson()) {
+            return route('login');
+        }
+    }
 }

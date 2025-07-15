@@ -120,10 +120,16 @@
         <img class="titlogo" src="asset/media/logo-sem-fundo.png" alt="Logo">
         <!--<input class="search" type="search" placeholder="Pesquisar aulas | cursos">-->
         @guest
-        <!-- Botões de Entrar e Registrar -->
-                <a href="{{ route('login') }}" class="btn-E" target="_blank" >Entrar</a>
-                <a href="{{ route('register') }}" class="btn-R" target="_blank" >Registrar</a>
-        @endguest
+                <a href="{{ Route('login') }}" class="btn btn-custom">Entrar</a>
+                <a href="{{ Route('register') }}" class="btn btn-custom">Registrar</a>
+            @else
+                <p>Olá, {{ Auth::user()->vc_nome }}!<p>
+                <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
+                <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Sair</button>
+                </form>
+            @endguest
     </div>
 <hr>
     <!-- Conteúdo da Página -->
@@ -144,21 +150,6 @@
             <div><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla, reprehenderit maxime nesciunt saepe, vero sequi atque obcaecati similique deleniti voluptatibus labore placeat ipsum suscipit ipsa voluptatum, cum ipsam eius neque?</p></div>
             <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit at eveniet minima rem aliquam, perferendis cupiditate esse ullam. Delectus alias odit, repudiandae totam assumenda nihil rem voluptatem est consequuntur sit!</p></div>
         </section>
-
-        <!-- Botões de Entrar e Registrar -->
-        <div class="mt-4">
-            @guest
-                <a href="{{ route('login') }}" class="btn btn-custom" target="_blank" >Entrar</a>
-                <a href="{{ route('register') }}" class="btn btn-custom" target="_blank" >Registrar</a>
-            @else
-                <h2>Olá, {{ Auth::user()->name }}!</h2>
-                <a href="{{ route('admin.student.user.index') }}" class="btn btn-success">Dashboard</a>
-                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Sair</button>
-                </form>
-            @endguest
-        </div>
     </div>
 
     <footer>

@@ -16,7 +16,7 @@ class AulaController extends Controller
 
         $data['cursos'] = Curso::all();
 
-        return view('admin.aulas.index', $data);
+        return view('Site.Pages.aulas.index', $data);
     }
 
     public function store(Request $request)

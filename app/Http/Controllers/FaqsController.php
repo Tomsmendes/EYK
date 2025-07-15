@@ -13,7 +13,7 @@ class FaqsController extends Controller
     public function index()
     {
         $faqs = faqs::all();
-        return view('admin.faqs.index', compact('faqs'));
+        return view('Site.Pages.faqs.index', compact('faqs'));
     }
 
     /**
@@ -40,17 +40,10 @@ class FaqsController extends Controller
 
         faqs::create($data);
 
-        return redirect()->route('faqs.index')->with('success', 'Curso criado com sucesso!');
+        return redirect()->route('faqs.index')->with('success', 'Faq criado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(faqs $faqs)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -79,7 +72,7 @@ class FaqsController extends Controller
     
         $faqs->update($data);
 
-        return redirect()->route('faqs.index')->with('success', 'Curso atualizado com sucesso!');
+        return redirect()->route('faqs.index')->with('success', 'Faq atualizado com sucesso!');
     }
 
     /**
@@ -90,6 +83,6 @@ class FaqsController extends Controller
         $faqs = faqs::where('id',$id)->first();
         $faqs->delete();
 
-        return redirect()->route('faqs.index')->with('success', 'Curso deletado com sucesso!');
+        return redirect()->route('faqs.index')->with('success', 'Faq deletado com sucesso!');
     }
 }

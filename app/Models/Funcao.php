@@ -13,4 +13,9 @@ class Funcao extends Authenticatable
         'name_fc',
         'descricao',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'fc_id');
+    }
 }

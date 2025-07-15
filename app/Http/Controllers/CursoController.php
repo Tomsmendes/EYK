@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
     public function index()
     {
-        $data['cursos'] = Curso::all();
-        return view('admin.cursos.index', $data);
+        $data['cursos'] = Curso::join('users', 'cursos.user_id', '=', 'users.id')
+            ->select(
+                'cursos.*',
+                'users.vc_nome as user_name',
+            )
+            ->get();
+
+        $data['users'] = User::all(); // ou 'funcaos' dependendo da convenção do seu model
+
+        return view('Site.Pages.cursos.index', $data);
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'user_id' => 'required|exists:users,id',
             'description' => 'required|string',
             'category' => 'required|string',
             'status' => 'required|string',
@@ -27,6 +37,7 @@ class CursoController extends Controller
 
         $filePath = public_path('uploads/cursos');
         $curso = new Curso();
+        $curso->user_id = $request->user_id;
         $curso->description = $request->description;
         $curso->category = $request->category;
         $curso->status = $request->status;
@@ -49,6 +60,7 @@ class CursoController extends Controller
     public function update(Request $request, Curso $curso)
     {
         $request->validate([
+            'user_id' => 'required|exists:users,id',
             'description' => 'required|string',
             'category' => 'required|string',
             'status' => 'required|string',
@@ -59,6 +71,7 @@ class CursoController extends Controller
         ]);
 
         $data = [
+            'user_id' => $request->user_id,
             'description' => $request->description,
             'category' => $request->category,
             'status' => $request->status,

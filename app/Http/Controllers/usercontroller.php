@@ -6,98 +6,97 @@ use App\Models\User;
 use App\Models\Funcao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $data['users'] = User::join('funcaos', 'users.fc_id', '=', 'funcaos.id')->
-        select(
-            'users.*',
-            'funcaos.name_fc as f_nome'
-        )->get();
+        $data['users'] = User::join('funcaos', 'users.fc_id', '=', 'funcaos.id')
+            ->select('users.*', 'users.fc_id', 'funcaos.name_fc as f_nome') // 🔧 incluído fc_id
+            ->get();
 
-        $data ['funcoes'] = funcao::all();
+        $data['funcoes'] = Funcao::all();
 
-        return view('admin.users.index', $data);
+        return view('Site.Pages.users.index', $data);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'fc_id' => 'required',
-            'photo' => 'mimes:png,jpg,jpeg|max:2048' 
-        ]);
-    
-        $filePath = public_path('uploads');
-        $insert = new User();
-        $insert -> name = $request->name;
-        $insert -> email = $request->email;
-        $insert -> fc_id = $request->fc_id;
-        $insert -> password = bcrypt('password');
+        try {
+            $request->validate([
+                'vc_nome' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:6|confirmed',
+                'fc_id' => 'required|exists:funcaos,id',
+                'photo' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+            ]);
 
-        if ($request->hasfile('photo')){
-            $file = $request->file('photo');
-            $file_name = time() . $file->getClientOriginalName();
+            $userData = $request->except('photo');
+            $userData['password'] = Hash::make($request->password);
 
-            $file->move($filePath, $file_name);
-            $insert->photo =$file_name;
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('Uploads'), $fileName);
+                $userData['photo'] = $fileName;
+            }
+
+            User::create($userData);
+
+            return redirect()->route('user.all')->with('success', 'Usuário criado com sucesso!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Erro ao criar usuário: ' . $e->getMessage()])->withInput();
         }
-
-        $result = $insert->save();
-
-        //Session::flash('Success', 'User registred successfully');
-        return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
     }
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id, 
-            'password' => 'nullable|min:6', 
-            'fc_id' => 'required',
-            'photo' => 'nullable|mimes:png,jpg,jpeg|max:2048'
-        ]);
-    
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'fc_id' => $request->fc_id,
-        ];
-    
-        if (!empty($request->password)) {
-            $data['password'] = bcrypt($request->password);
-        }
-    
-        if ($request->hasFile('photo')) {
-            if ($user->photo && file_exists(public_path('uploads/' . $user->photo))) {
-                unlink(public_path('uploads/' . $user->photo));
+        try {
+            $request->validate([
+                'vc_nome' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'password' => 'nullable|min:6|confirmed',
+                'fc_id' => 'required|exists:funcaos,id',
+                'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            ]);
+
+            $userData = $request->only(['vc_nome', 'email', 'fc_id']);
+
+            if ($request->filled('password')) {
+                $userData['password'] = Hash::make($request->password);
             }
-    
-            $file = $request->file('photo');
-            $file_name = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads'), $file_name);
-            $data['photo'] = $file_name;
+
+            if ($request->hasFile('photo')) {
+                if ($user->photo && file_exists(public_path('Uploads/' . $user->photo))) {
+                    @unlink(public_path('Uploads/' . $user->photo));
+                }
+
+                $file = $request->file('photo');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('Uploads'), $fileName);
+                $userData['photo'] = $fileName;
+            }
+
+            $user->update($userData);
+
+            return redirect()->route('user.all')->with('success', 'Usuário atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Erro ao atualizar usuário: ' . $e->getMessage()])->withInput();
         }
-    
-        $user->update($data);
-    
-        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
     }
-    
 
-    public function destroy(User $user)
+    public function delete(User $user)
     {
-        if ($user->photo) {
-            Storage::disk('public')->delete($user->photo);
-        }
-        $user->delete();
+        try {
+            if (!empty($user->photo) && file_exists(public_path('Uploads/' . $user->photo))) {
+                @unlink(public_path('Uploads/' . $user->photo));
+            }
 
-        return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
+            $user->delete();
+
+            return redirect()->route('user.all')->with('success', 'Usuário excluído com sucesso!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Erro ao excluir usuário: ' . $e->getMessage()]);
+        }
     }
 }
