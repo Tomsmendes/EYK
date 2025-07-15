@@ -1,124 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eyk</title>
+    <title>@yield('title', 'Educação Online')</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="asset/css/style.css">
-    <style>
-        body {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        nav.sidebar {
-            width: 250px;
-            background-color: bisque;
-            padding: 15px;
-            height: 100%;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        nav.sidebar.hidden {
-            transform: translateX(-100%);
-        }
-        .toggle-btn {
-            position: fixed;
-            top: 10px;
-            left: 230px;
-            background: bisque;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: left 0.3s ease;
-            z-index: 900;
-        }
-        nav.sidebar.hidden + .toggle-btn {
-            left: 5px;
-        }
-        nav.sidebar h4 {
-            margin-bottom: 20px;
-        }
-        nav.sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        nav.sidebar ul li a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #000;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        nav.sidebar ul li a:hover {
-            background-color: #daa520;
-            color: bisque;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            flex-grow: 1;
-            transition: margin-left 0.3s ease;
-        }
-        .content.full {
-            margin-left: 0;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{{ asset('asset/css/main.css') }}">
 </head>
 <body>
-    <nav class="sidebar" id="sidebar">
-        <h4><img src="{{ asset('media/logo-sem-fundo.png') }}" alt="logo-app"></h4>
-        <ul>
-            @if (auth()->user()->role === 'teacher')
-                <li><a href="{{ route('admin.teacher.user.index') }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                  </svg></a></li>
-                <li><a href="{{ route('teacher.videos.index') }}">Meus Vídeos</a></li>
-                <li><a href="{{ route('teacher.courses.index') }}">Meus Cursos</a></li>
-                <li><a href="{{ route('teacher.videos.create') }}">Criar Vídeo</a></li>
-                <li><a href="{{ route('teacher.courses.create') }}">Criar Curso</a></li>
-            @elseif (auth()->user()->role === 'student')
-                <li><a href="{{ route('admin.student.user.index') }}">Minha Conta</a></li>
-                <li><a href="{{ route('student.videos.index') }}">Vídeos</a></li>
-                <li><a href="{{ route('student.courses.index') }}">Cursos</a></li>
-            @endif
-            <li>
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-            </li>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </ul>
-    </nav>
-    <button class="toggle-btn" id="toggle-btn" onclick="toggleSidebar()"><</button>
-    <main class="content" id="content">
-        @yield('content')
-    </main>
+    @include('layouts.sidebar')
 
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('content');
-            const toggleBtn = document.getElementById('toggle-btn');
-            sidebar.classList.toggle('hidden');
-            content.classList.toggle('full');
-            if (sidebar.classList.contains('hidden')) {
-                toggleBtn.style.left = '10px';
-            } else {
-                toggleBtn.style.left = '230px';
-            }
-        }
-    </script>
-</body>
-</html>
+    <div class="main-content" style="margin-left: 250px;">
+        <!-- NAVBAR SUPERIOR -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-2 d-flex justify-content-between align-items-center">
+            <form class="d-flex w-50">
+                <input class="form-control me-2" type="search" placeholder="Pesquisar..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+
+            <div class="d-flex align-items-center">
+                <!-- Notificações -->
+                <a href="#" class="text-dark me-4 position-relative">
+                    <i class="fa fa-bell fa-lg"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                    </span>
+                </a>
+
                 <!-- Informações do Usuário Logado -->
                 @auth
                 <div class="dropdown">

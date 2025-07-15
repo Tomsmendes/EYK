@@ -1,32 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Estilo personalizado -->
+    <link rel="stylesheet" href="asset/css/auth.css">
 </head>
 <body>
-    <h1>Login</h1>
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+<div class="container-login">
+    <div class=logo-login><video src="asset/media/eyk-effet-panorama.mp4" autoplay loop muted playsinline disablePictureInPicture ></video></div>
+    <div class="container mt-5">
+        <h2 class="text-center">Iniciar  sessão</h2>
+        <form method="POST" action="{{ route('auth.login') }}">
+            @csrf
 
-    <form method="POST" action="{{ route('auth.login') }}">
-        @csrf
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" value="{{ old('email') }}" required>
-        </div>
-        <div>
-            <label for="password">Senha:</label>
-            <input type="password" name="password" id="password" required>
-        </div>
-        <button type="submit">Entrar</button>
-        <a href="{{ route('auth.register') }}">Não tenho conta!</a>
-    </form>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                @error('email')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div style="text-align:center;font-weight:bold;">Não tem uma conta ? <br><a href="{{ route('register') }}" class="">Se inscreva gratuitamente</a></div>
+    </div>
+</div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
