@@ -26,6 +26,7 @@
             <input type="password" name="password" id="password" required>
         </div>
         <button type="submit">Entrar</button>
+        <a href="{{ route('auth.register') }}">Não tenho conta!</a>
     </form>
 </body>
 </html>

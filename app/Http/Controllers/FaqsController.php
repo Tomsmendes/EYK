@@ -13,7 +13,7 @@ class FaqsController extends Controller
     public function index()
     {
         $faqs = faqs::all();
-        return view('admin.faqs.index', compact('faqs'));
+        return view('Site.Pages.faqs.index', compact('faqs'));
     }
 
     /**

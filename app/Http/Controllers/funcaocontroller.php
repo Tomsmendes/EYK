@@ -10,7 +10,7 @@ class FuncaoController extends Controller
     public function index()
     {
         $funcoes = Funcao::all();
-        return view('admin.funcoes.index', compact('funcoes'));
+        return view('Site.Pages.funcoes.index', compact('funcoes'));
     }
 
     public function store(Request $request)

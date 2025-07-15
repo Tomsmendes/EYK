@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1>Vídeos da Aula)</h1>
+    <h1>Vídeos da Aula</h1>
     <a href="{{ route('aulas.index') }}" class="btn btn-secondary mb-3">Voltar para Aulas</a>
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#videoModal" onclick="prepareModal('create', '{{ route('videos.store') }}')">Novo Vídeo</button>
 
@@ -20,7 +20,7 @@
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>URL</th>
+                <th>Video</th>
                 <th>Descrição</th>
                 <th>Aula</th>
                 <th>Ações</th>
@@ -31,7 +31,6 @@
                 <tr>
                     <td>{{ $video->id }}</td>
                     <td>{{ $video->vd_name }}</td>
-                    <td><a href="{{ $video->url }}" target="_blank">{{ $video->url }}</a></td>
                     <td>{{ $video->vd_descricao ?? 'Sem descrição' }}</td>
                     <td>{{ $video->a_nome}}</td>
                     <td>
@@ -61,7 +60,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="videoForm" method="POST">
+                    <form id="videoForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div id="methodField"></div>
 
@@ -71,8 +70,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="url" class="form-label">URL</label>
-                            <input type="url" class="form-control" id="url" name="url" required>
+                            <label for="file_path" class="form-label">Video</label>
+                            <input type="file" class="form-control" name="file_path" accept=".mp4,.avi,.mkv" required>
                         </div>
 
                         <div class="mb-3">
@@ -113,7 +112,6 @@ function prepareModal(mode, url, video = null) {
         modalTitle.textContent = 'Editar Vídeo';
         methodField.innerHTML = '@method("PUT")';
         document.getElementById('vd_name').value = video.vd_name;
-        document.getElementById('url').value = video.url;
         document.getElementById('vd_descricao').value = video.vd_descricao || '';
         document.getElementById('aula_id').value = video.aula_id;
     } else {

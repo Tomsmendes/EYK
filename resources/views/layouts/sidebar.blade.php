@@ -43,11 +43,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('ofensivas.index') }}">
-                <i class="fa fa-check-square"></i> Ofensiva
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link text-white" href="{{ route('faqs.index') }}">
                 <i class="fa fa-check-square"></i> Faqs
             </a>

@@ -21,9 +21,13 @@ use App\Http\Controllers\FaqsController;
 */
 
 // Páginas de autenticação
-Route::get('/', function () {
+Route::get('/logar', function () {
     return view('Site.auth.login');
 })->name('login');
+
+Route::get('/registrar', function () {
+    return view('Site.auth.register');
+})->name('register');
 
 // Processamento de formulários
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -35,11 +39,11 @@ Route::post('/register', [AuthController::class, 'register'])->name('auth.regist
 | Rotas de Usuário
 |--------------------------------------------------------------------------
 */
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 // Rotas para gestão de usuários
 Route::prefix('user')->group(function () {
@@ -47,7 +51,7 @@ Route::prefix('user')->group(function () {
     Route::get('/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/', [UserController::class, 'store'])->name('user.store');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/{id}', [UserController::class, 'delete'])->name('user.delete');
 });
 

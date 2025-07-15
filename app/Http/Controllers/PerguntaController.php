@@ -19,7 +19,7 @@ class PerguntaController extends Controller
 
         $data['questionarios'] = Questionario::all();
 
-        return view('admin.perguntas.index', $data);
+        return view('Site.Pages.perguntas.index', $data);
     }
 
     public function store(Request $request, Curso $curso, Aula $aula, Questionario $questionario)

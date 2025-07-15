@@ -74,22 +74,30 @@
 
         <!-- CONTEÚDO PRINCIPAL -->
         <div class="p-4">
-            @auth
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-                <div class="flex-shrink-0 me-3">
-                    <i class="fas fa-user-circle fa-2x"></i>
-                </div>
-                <div>
-                    <h5 class="alert-heading mb-1">Bem-vindo, {{ Auth::user()->vc_nome }}!</h5>
-                    <p class="mb-0">Você está logado como <strong>{{ Auth::user()->email }}</strong></p>
-                </div>
-            </div>
-            @endauth
-
             @yield('content')
         </div>
+
+        <footer>
+        <p>&copy; 2024 Projeto EYK - Todos os direitos reservados</p>
+    </footer>
     </div>
 
+    <style>
+footer {
+            color: gray;
+            padding: 20px;
+            text-align: center;
+            margin-top: 150px;
+
+        }
+
+    .showPhoto img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    </style>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

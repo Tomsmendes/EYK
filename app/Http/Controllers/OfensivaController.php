@@ -12,12 +12,12 @@ class OfensivaController extends Controller
     public function index()
     {
         $data['ofensivas'] = Ofensiva::join('users', 'ofensivas.user_id', '=', 'users.id')
-            ->select('ofensivas.*', 'users.name as user_name')
+            ->select('ofensivas.*', 'users.vc_nome as user_name')
             ->get();
 
         $data['users'] = User::all(); // Obtendo todos os usuários para o select no formulário
 
-        return view('admin.ofensivas.index', $data);
+        return view('Site.Pages.ofensivas.index', $data);
     }
 
     public function store(Request $request)

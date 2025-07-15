@@ -8,6 +8,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+
 class VideoController extends Controller
 {
     public function index()
@@ -20,45 +21,61 @@ class VideoController extends Controller
 
         $data ['aulas'] = Aula::all();
 
-        return view('admin.videos.index', $data);
+        return view('Site.Pages.videos.index', $data);
     }
 
     public function store(Request $request, Curso $curso, Aula $aula)
     {
-    
-        $request->validate([
-            'vd_name' => 'required|string|max:255',
-            'url' => 'required|url',
-            'vd_descricao' => 'nullable|string',
-            'aula_id' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'vd_name' => 'required|string|max:255',
+                'file_path' => 'required|file|mimes:mp4,avi,mkv|max:102400',
+                'vd_descricao' => 'nullable|string',
+                'aula_id' => 'required',
+            ]);
 
-        $video = new Video();
-        $video->vd_name = $request->vd_name;
-        $video->url = $request->url;
-        $video->vd_descricao = $request->vd_descricao;
-        $video->aula_id = $request->aula_id;
-        $video->save();
+            $videoData = $request->except('file_path');
 
-        Session::flash('success', 'Vídeo criado com sucesso!');
-        return redirect()->route('videos.index', [$curso, $aula]);
+            if ($request->hasFile('file_path')){
+                $file = $request->file('file_path');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/videos/'), $fileName);
+                $videoData['file_path'] = 'uploads/videos/' . $fileName;
+            }
+
+            $video = Video::create($videoData);
+
+            Session::flash('success', 'Vídeo criado com sucesso!');
+            return redirect()->route('videos.index', [$curso, $aula]);
+        }
+        catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Erro ao criar usuário: ' . $e->getMessage()])->withInput();
+        }
     }
 
     public function update(Request $request, Curso $curso, Aula $aula, Video $video)
     {
         $request->validate([
             'vd_name' => 'required|string|max:255',
-            'url' => 'required|url',
             'vd_descricao' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
+            'file_path' => 'nullable|file|mimes:mp4,avi,mkv|max:102400', // Novo arquivo é opcional
         ]);
 
-        $video->update([
-            'vd_name' => $request->vd_name,
-            'url' => $request->url,
-            'vd_descricao' => $request->vd_descricao,
-            'aula_id' => $request->aula_id,
-        ]);
+        $videoData = $request->except('file_path');
+
+        if ($request->hasFile('file_path')) {
+            if ($video->file_path && file_exists(public_path($video->file_path))) {
+                unlink(public_path($video->file_path));
+            }
+
+            $file = $request->file('file_path');
+            $fileName = uniqid('video_') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/videos/'), $fileName);
+            $videoData['file_path'] = 'uploads/videos/' . $fileName;
+        }
+
+        $video->update($videoData);
 
         Session::flash('success', 'Vídeo atualizado com sucesso!');
         return redirect()->route('videos.index', [$curso, $aula]);
@@ -66,10 +83,17 @@ class VideoController extends Controller
 
     public function destroy(Curso $curso, Aula $aula, Video $video)
     {
+        if ($video->file_path && file_exists(public_path($video->file_path))) {
+            unlink(public_path($video->file_path));
+        }
+
         $video->delete();
+
         Session::flash('success', 'Vídeo excluído com sucesso!');
         return redirect()->route('videos.index', [$curso, $aula]);
     }
+
+
 
     public function indexNonNested()
     {

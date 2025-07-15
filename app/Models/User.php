@@ -52,4 +52,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Funcao::class, 'fc_id');
     }
+
+    public function getRoleAttribute()
+    {
+        return $this->fc_id;
+    }
+
 }

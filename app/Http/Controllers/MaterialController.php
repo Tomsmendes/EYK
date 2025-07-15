@@ -21,7 +21,7 @@ class MaterialController extends Controller
 
         $data ['aulas'] = Aula::all();
 
-        return view('admin.materiais.index', $data);
+        return view('Site.Pages.materiais.index', $data);
     }
 
     public function store(Request $request, Curso $curso, Aula $aula)

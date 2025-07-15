@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -11,10 +12,8 @@ class UserController extends Controller
     public function index()
     {
         $data['users'] = User::join('funcaos', 'users.fc_id', '=', 'funcaos.id')
-            ->select(
-                'users.*',
-                'funcaos.name_fc as f_nome'
-            )->get();
+            ->select('users.*', 'users.fc_id', 'funcaos.name_fc as f_nome') // 🔧 incluído fc_id
+            ->get();
 
         $data['funcoes'] = Funcao::all();
 
@@ -58,20 +57,20 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users,email,' . $user->id,
                 'password' => 'nullable|min:6|confirmed',
                 'fc_id' => 'required|exists:funcaos,id',
-                'photo' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+                'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             ]);
 
-            $userData = $request->except('photo');
+            $userData = $request->only(['vc_nome', 'email', 'fc_id']);
+
             if ($request->filled('password')) {
                 $userData['password'] = Hash::make($request->password);
-            } else {
-                unset($userData['password']);
             }
 
             if ($request->hasFile('photo')) {
                 if ($user->photo && file_exists(public_path('Uploads/' . $user->photo))) {
-                    unlink(public_path('Uploads/' . $user->photo));
+                    @unlink(public_path('Uploads/' . $user->photo));
                 }
+
                 $file = $request->file('photo');
                 $fileName = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('Uploads'), $fileName);
@@ -86,13 +85,15 @@ class UserController extends Controller
         }
     }
 
-    public function destroy(User $user)
+    public function delete(User $user)
     {
         try {
-            if ($user->photo && file_exists(public_path('Uploads/' . $user->photo))) {
-                unlink(public_path('Uploads/' . $user->photo));
+            if (!empty($user->photo) && file_exists(public_path('Uploads/' . $user->photo))) {
+                @unlink(public_path('Uploads/' . $user->photo));
             }
+
             $user->delete();
+
             return redirect()->route('user.all')->with('success', 'Usuário excluído com sucesso!');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Erro ao excluir usuário: ' . $e->getMessage()]);

@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function showRegisterForm()
     {
-        $funcoes = Funcao::all(); // Fetch all functions
+        $funcoes = Funcao::all(); 
         return view('Site.auth.register', compact('funcoes'));
     }
 

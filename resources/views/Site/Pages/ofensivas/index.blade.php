@@ -70,7 +70,7 @@
                             <label for="user_id" class="form-label">Responsável</label>
                             <select name="user_id" id="user_id" class="form-control">
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->vc_nome }}</option>
                                 @endforeach
                             </select>
                         </div>

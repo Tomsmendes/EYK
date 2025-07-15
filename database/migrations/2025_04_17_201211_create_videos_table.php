@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('vd_name');
-            $table->string('url');
+            $table->string('file_path', 255);
             $table->text('vd_descricao')->nullable();
             $table->unsignedBigInteger('aula_id');
             $table->timestamps();
