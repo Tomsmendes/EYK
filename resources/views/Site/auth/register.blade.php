@@ -1,69 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-
-    <!-- Bootstrap -->
+    <title>Registrar</title>
+</head>
+ <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="asset/css/auth.css">
-</head>
 <body>
-<div class="container-login">
-    <div class=logo-login><video src="asset/media/eyk-effet-panorama.mp4" autoplay loop muted playsinline  disablePictureInPicture></video>
-</div>
-    <div class="container">
-        <h2>Criar conta</h2>
-        <form method="POST" action="{{ route('auth.register') }}">
-            @csrf
+    <div class="container-login">
+         <div class=logo-login><video src="asset/media/eyk-effet-panorama.mp4" autoplay loop muted playsinline disablePictureInPicture ></video></div>
+        <div class="container mt-5">
+            <h2 class="text-center">Registrar</h2>
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            <div class="form-group">
-                <label for="name">Nome:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
-                @error('name')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
-                @error('email')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="password">Senha:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                @error('password')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="password_confirmation">Confirmação de Senha:</label>
-                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
-            </div>
-
-            <div class="form-group">
-                <label for="role">Tipo de Usuário:</label>
-                <select class="form-control" id="role" name="role">
-                    <option value="student">Estudante</option>
-                    <option value="teacher">Professor</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Registrar</button>
-            <div style="text-align:center;font-weight:bold;">Já possui uma conta ? <br><a href="{{ route('login') }}" class="">Entre na plataforma</a></div>
-        </form>
+    <form method="POST" action="{{ route('auth.register') }}" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group" >
+            <label for="vc_nome">Nome:</label>
+            <input type="text" class="form-control" name="vc_nome" id="vc_nome" value="{{ old('vc_nome') }}" required>
+        </div>
+        <div class="form-group" >
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}" required>
+        </div>
+        <div class="form-group" >
+            <label for="password">Senha:</label>
+            <input type="password" class="form-control" name="password" id="password" required>
+        </div>
+        <div class="form-group" >
+            <label for="password_confirmation">Confirmar Senha:</label>
+            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
+        </div>
+        <div class="form-group" >
+            <label for="fc_id">Função:</label>
+            <select name="fc_id" id="fc_id" required>
+                <option value="">Selecione uma função</option>
+                @foreach ($funcoes as $funcao)
+                    <option value="{{ $funcao->id }}" {{ old('fc_id') == $funcao->id ? 'selected' : '' }}>
+                        {{ $funcao->name_fc }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label for="photo">Foto:</label>
+            <input type="file" name="photo" id="photo" accept="image/*">
+        </div>
+        <button type="submit"class="btn btn-primary">Registrar</button>
+    </form>
+        </div>
     </div>
-</div>
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
