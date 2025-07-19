@@ -35,9 +35,6 @@ nav div {
     transition: all 0.3s ease;
 }
 
-/* .btn-custom:hover {
-      transform: scale(1.05);
-    } */
 #entrar {
     background: white;
     border: none;
@@ -50,16 +47,19 @@ nav div {
 }
 
 .estdprof img {
-    width: 30%;
+    width: 35%;
     border-radius: 4px;
     margin: 5%;
 }
 
-footer {
-    background-color: #111;
-    color: #fff;
-    padding: 30px 20px;
-    text-align: center;
+.container-maskote{
+    width:100%;
+    margin:2%;
+    padding:0;
+}
+.container-maskote img{
+    width:100%;
+    border-bottom: 1px solid;
 }
 
 section.sec-text {
@@ -79,27 +79,22 @@ section.sec-text {
     /* background-color: #fff9e6; */
     box-shadow: 0 2px 2px 0px;
 }
+.sec-text div:hover{
+    cursor: pointer;
+    border-right: 2px solid ;
+}
 
 .sec-text p {
     text-align: left;
+}
+footer {
+    background-color: #111;
+    color: #fff;
+    padding: 30px 20px;
+    text-align: center;
 }
 
 footer a img {
     transition: transform 0.3s ease;
     margin: 0 10px;
 }
-
-
-/* @media (max-width: 768px) {
-      .topo {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .search {
-        width: 100%;
-        margin-left: 0;
-      }
-      .sec-text p {
-        width: 90%;
-      }
-    } */
