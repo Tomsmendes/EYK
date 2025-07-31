@@ -43,7 +43,6 @@ nav div {
 .welcome {
     color: white;
     margin: 3%;
-    margin-bottom: 10%;
 }
 
 .estdprof img {
@@ -86,6 +85,9 @@ section.sec-text {
 
 .sec-text p {
     text-align: left;
+}
+.login-lead{
+    display: none;
 }
 footer {
     background-color: #111;

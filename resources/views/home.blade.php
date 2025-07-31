@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Estilo personalizado -->
     <link rel="stylesheet" href="asset/css/home.css">
+    <link rel="stylesheet" href="asset/css/mediaqueryes.css">
 </head>
 <style>
     .landing {
@@ -51,8 +52,6 @@
         </div>
     </div>
 
-    <hr />
-
     <div class="container text-center mt-5">
         <h1>O que é <strong>EYK?</strong></h1>
         <p class="lead">Ekola ya kelela de origem Kimbundu, em Português <q>Escola Especial</q>,é uma plataforma
@@ -62,6 +61,19 @@
             para estudantes criando um ambiente educacional dinâmico onde professores possam compartilhar suas aulas
             online, e usuários possam acessar conteúdos de qualidade em diversos temas educacionais.
         </p>
+        <div class="login-lead" >
+            @guest
+                <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" target="_blank">Entrar</a>
+                <a href="{{ Route('register') }}" class="btn btn-custom" target="_blank">Registar</a>
+            @else
+                <span style="color:white; font-weight:bold;">Olá, {{ Auth::user()->vc_nome }}!</span>
+                <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
+                <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Sair</button>
+                </form>
+            @endguest
+        </div>
 
         <div class="estdprof">
             <img src="asset/media/estudante.jpg" alt="">

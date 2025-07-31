@@ -61,7 +61,7 @@
                                         @if ($user->photo)
                                             <img src="{{ url('/Uploads/' . $user->photo) }}" alt="Foto de {{ $user->vc_nome }}" class="img-thumbnail">
                                         @else
-                                            <img src="{{ url('/Uploads/default.png') }}" alt="Imagem padrão" class="img-thumbnail">
+                                            <img src="{{ url('/media/avatar-default.png') }}" alt="Imagem padrão" class="img-thumbnail">
                                         @endif
                                     </div>
                                 </td>

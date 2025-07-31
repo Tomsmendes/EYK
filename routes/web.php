@@ -13,6 +13,9 @@ use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\FuncaoController;
 use App\Http\Controllers\OfensivaController;
 use App\Http\Controllers\FaqsController;
+use App\Http\Controllers\ComunidadeController;
+use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\PostCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,14 +69,24 @@ Route::prefix('admin')->group(function () {
     Route::resource('aulas', AulaController::class);
     Route::resource('videos', VideoController::class);
     Route::resource('materiais', MaterialController::class);
-    
+
     // Gestão de Questionários
     Route::resource('questionarios', QuestionarioController::class);
     Route::resource('perguntas', PerguntaController::class);
     Route::resource('respostas', RespostaController::class);
-    
+
     // Outros recursos
     Route::resource('funcoes', FuncaoController::class);
     Route::resource('ofensivas', OfensivaController::class);
     Route::resource('faqs', FaqsController::class);
 });
+/*----------------------------------Seth--------------------------------------------------------*/
+// Comunidade
+Route::middleware(['auth'])->group(function () {
+    Route::get('/comunidade', [ComunidadeController::class, 'index'])->name('comunidade');
+    Route::post('/comunidade', [ComunidadeController::class, 'store'])->name('comunidade.store');
+});
+
+// Curtir e comentar
+Route::post('/comunidade/post/{id}/curtir', [PostLikeController::class, 'curtir'])->name('post.curtir');
+Route::post('/comunidade/post/{id}/comentar', [PostCommentController::class, 'comentar'])->name('post.comentar');
