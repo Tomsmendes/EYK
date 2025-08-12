@@ -63,8 +63,8 @@
         </p>
         <div class="login-lead" >
             @guest
-                <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" target="_blank">Entrar</a>
-                <a href="{{ Route('register') }}" class="btn btn-custom" target="_blank">Registar</a>
+                <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" >Entrar</a>
+                <a href="{{ Route('register') }}" class="btn btn-custom" >Registar</a>
             @else
                 <span style="color:white; font-weight:bold;">Olá, {{ Auth::user()->vc_nome }}!</span>
                 <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
@@ -148,22 +148,6 @@
         <hr style="margin: 30px auto; border: 0; height: 1px; background: #444; width: 90%;" />
         <p style="font-size: 14px;">&copy; 2025 Projeto EYK - Todos os direitos reservados a Transfortech</p>
     </footer>
-
-    <section class="sec-text">
-      <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, dolorum molestiae?</p></div>
-      <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, reprehenderit maxime.</p></div>
-      <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit at eveniet.</p></div>
-    </section>
-  </div>
-
-  <footer>
-    <p>&copy; 2024 Projeto EYK - Todos os direitos reservados a Transfortech</p>
-    <p>
-      <a href="https://www.instagram.com/trans_fortech" target="_blank" aria-label="Instagram Transfortech">
-        <img style="height: 40px;" src="asset/media/Instagram.png" alt="Instagram" />
-      </a>
-    </p>
-  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
