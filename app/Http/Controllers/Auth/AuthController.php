@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function showRegisterForm()
     {
-        $funcoes = Funcao::all(); 
+        $funcoes = Funcao::all();
         return view('Site.auth.register', compact('funcoes'));
     }
 
@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->route('home');
+            return redirect()->route('user.all');
         }
 
         return back()->withErrors([
@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         $user = User::create($userData);
         Auth::login($user);
-        return redirect()->route('home');
+        return redirect()->route('user.all');
     }
 
     public function logout()

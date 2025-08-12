@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\PostLike;
+use App\Models\PostComment;
 
 class User extends Authenticatable
 {
@@ -56,6 +58,15 @@ class User extends Authenticatable
     public function getRoleAttribute()
     {
         return $this->fc_id;
+    }
+    public function likes()
+    {
+        return $this->hasMany(PostLike::class);
+    }
+
+    public function comentarios()
+    {
+        return $this->hasMany(PostComment::class);
     }
 
 }

@@ -15,14 +15,23 @@
     transition: 0.3s;
 }
 
-.sidebar .nav-link:hover {
-    background-color: darkgoldenrod;
-    color: darkgoldenrod;
-    text-decoration: none;
-}
+
 
 /* Estilo do Conteúdo Principal */
 .main-content {
     margin-left: 260px;
     padding: 20px;
+}
+/* Em telas grandes: deixa espaço para a sidebar */
+@media (min-width: 769px) {
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+/* Em telas pequenas: ocupa toda a largura */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
 }
