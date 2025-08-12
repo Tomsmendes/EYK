@@ -1,0 +1,144 @@
+.header-comunidade {
+    text-align: center;
+}
+
+.logotype {
+    width: 5%;
+}
+
+.subtitulo {
+    color: #333333;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.nav-menu button {
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+}
+
+.nav-menu button.active {
+    color: #007bff;
+}
+
+.main-comunidade {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+textarea:focus {
+    outline: none;
+    border: 1px solid #007bff;
+    box-shadow: 0 0 3px #007bff;
+}
+
+.form-publicacao button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.mensagem-sucesso {
+    margin-top: 10px;
+    color: green;
+}
+
+.post {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.form-curtir button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.comentarios {
+    margin-top: 10px;
+    padding-left: 10px;
+    border-left: 2px solid #ccc;
+}
+
+.form-comentario {
+    margin-top: 10px;
+}
+
+.form-comentario input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.form-comentario button {
+    margin-top: 5px;
+    padding: 6px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+.data-post {
+    color: gray;
+}
+
+.nenhuma-publicacao {
+    color: gray;
+}
+
+.comentarios-ocultos {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.comentarios-ocultos.ativo {
+    max-height: 500px;
+    opacity: 1;
+}

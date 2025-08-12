@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/main.css') }}">
 </head>
 <body>
     @include('layouts.sidebar')
@@ -44,7 +44,7 @@
                             @if (Auth::user()->photo)
                                 <img src="{{ url('/Uploads/' . Auth::user()->photo) }}" alt="Foto de {{ Auth::user()->vc_nome }}" class="img-thumbnail">
                             @else
-                                <img src="{{ url('/Uploads/default.png') }}" alt="Imagem padrão" class="img-thumbnail">
+                                <img src="{{ url('/media/avatar-default.png') }}" alt="Imagem padrão" class="img-thumbnail">
                             @endif
                         </div>
                         <div class="text-start">
@@ -78,18 +78,17 @@
         </div>
 
         <footer>
-        <p>&copy; 2024 Projeto EYK - Todos os direitos reservados</p>
+        <p>&copy; 2025 Projeto EYK - Todos os direitos reservados</p>
     </footer>
     </div>
 
     <style>
-footer {
-            color: gray;
-            padding: 20px;
-            text-align: center;
-            margin-top: 150px;
-
-        }
+    footer {
+        color: gray;
+        padding: 20px;
+        text-align: center;
+        margin-top: 150px;
+    }
 
     .showPhoto img {
         width: 50px;
@@ -97,7 +96,7 @@ footer {
         object-fit: cover;
         border-radius: 50%;
     }
-    </style>
+style>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -1,178 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Página Inicial - EYK</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
-    body {
-      font-family: 'Lobster', sans-serif;
-      background-color: white;
-      color: goldenrod;
-    }
-
-    .topo {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-    }
-
-    .titlogo {
-      width: 80px;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .titlogo:hover {
-      transform: scale(1.1);
-    }
-
-    .btn-custom {
-      background-color: goldenrod;
-      color: white;
-      border-radius: 5px;
-      padding: 8px 16px;
-      margin: 0 5px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .btn-custom:hover {
-      background-color: #daa520;
-      transform: scale(1.05);
-    }
-
-    .language-selector {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 30px 0;
-    }
-
-    .language-selector button {
-      background-color: goldenrod;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      font-size: 18px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .language-selector button:hover {
-      background-color: #daa520;
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: #333;
-      padding: 20px;
-      color: white;
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    footer a img {
-      transition: transform 0.3s ease;
-      margin: 0 10px;
-    }
-
-    footer a img:hover {
-      transform: scale(1.1);
-    }
-
-    section.sec-text {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .sec-text p {
-      border: 2px solid #daa520;
-      border-radius: 8px;
-      color: black;
-      margin: 15px;
-      padding: 20px;
-      font-weight: bold;
-      max-width: 300px;
-      background-color: #fff9e6;
-    }
-
-    .imagem-banner {
-      display: block;
-      margin: 0 auto;
-      width: 90%;
-      border-radius: 15px;
-    }
-
-    @media (max-width: 768px) {
-      .topo {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .search {
-        width: 100%;
-        margin-left: 0;
-      }
-      .sec-text p {
-        width: 90%;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Inicial - EYK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Estilo personalizado -->
+    <link rel="stylesheet" href="asset/css/home.css">
+    <link rel="stylesheet" href="asset/css/mediaqueryes.css">
 </head>
+<style>
+    .landing {
+        padding: 1rem;
+        background-image: url('{{ ' asset/Website-ui-img/landing.png' }}');
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+</style>
+
 <body>
-  <div class="topo">
-    <img class="titlogo" src="asset/media/logo-sem-fundo.png" alt="Logo EYK" />
-    <!-- <input class="search" type="search" placeholder="Pesquisar aulas | cursos" /> -->
+    <div class="landing">
+        <nav>
+            <img class="logotype" src="asset/media/logo-sem-fundo.png" alt="Logo EYK" />
+            <div>
+                <a href="#">Casa</a>
+                <a href="#">Cursos</a>
+                <a href="#">Sobre</a>
+            </div>
+        </nav>
 
-    <div>
-      @guest
-        <a href="{{ Route('login') }}" class="btn btn-custom">Entrar</a>
-        <a href="{{ Route('register') }}" class="btn btn-custom">Registrar</a>
-      @else
-        <span style="color:black; font-weight:bold;">Olá, {{ Auth::user()->vc_nome }}!</span>
-        <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
-        <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
-          @csrf
-          <button type="submit" class="btn btn-danger">Sair</button>
-        </form>
-      @endguest
-    </div>
-  </div>
-
-  <hr />
-
-  <div class="container text-center mt-5">
-    <h1>Bem-vindo ao <strong>EYK</strong></h1>
-    <p class="lead">Estamos felizes por tê-lo aqui. Explore as funcionalidades da nossa plataforma.</p>
-
-    <!-- Idiomas -->
-    <div class="language-selector">
-      <button><i class="fas fa-language"></i> Português</button>
-      <button><i class="fas fa-handshake"></i> Libras</button>
+        <div class="welcome">
+            <h1>Estudar Língua Gestual <br><span style="color: goldenrod;">Online</span> nunca foi tão fácil</h1>
+            <q>Ekola ya kelela, uma plataforma dedicada para o ensino especial.</q><br><br>
+            <div>
+                @guest
+                    <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" target="_blank">Entrar</a>
+                    <a href="{{ Route('register') }}" class="btn btn-custom" target="_blank">Registar</a>
+                @else
+                    <span style="color:white; font-weight:bold;">Olá, {{ Auth::user()->vc_nome }}!</span>
+                    <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
+                    <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Sair</button>
+                    </form>
+                @endguest
+            </div>
+        </div>
     </div>
 
-    <img class="imagem-banner" src="asset/media/boy-listening-music-using-laptop.jpg" alt="Estudante ouvindo música usando laptop" />
+    <div class="container text-center mt-5">
+        <h1>O que é <strong>EYK?</strong></h1>
+        <p class="lead">Ekola ya kelela de origem Kimbundu, em Português <q>Escola Especial</q>,é uma plataforma
+            digital direcionada à pessoas com deficiências aufónicas e auditivas, ajudando-ás com vídeo-aulas, conteúdos
+            de entretenimento, conceitos escolares e científicos, de modo a reforçar o seu entendimento sobre conteúdos
+            já ministrados e também esclarecendo dúvidas.Eyk vem oferecendo oportunidades tanto para professores quanto
+            para estudantes criando um ambiente educacional dinâmico onde professores possam compartilhar suas aulas
+            online, e usuários possam acessar conteúdos de qualidade em diversos temas educacionais.
+        </p>
+        <div class="login-lead" >
+            @guest
+                <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" >Entrar</a>
+                <a href="{{ Route('register') }}" class="btn btn-custom" >Registar</a>
+            @else
+                <span style="color:white; font-weight:bold;">Olá, {{ Auth::user()->vc_nome }}!</span>
+                <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
+                <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Sair</button>
+                </form>
+            @endguest
+        </div>
 
-    <section class="sec-text">
-      <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, dolorum molestiae?</p></div>
-      <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, reprehenderit maxime.</p></div>
-      <div><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit at eveniet.</p></div>
-    </section>
-  </div>
+        <div class="estdprof">
+            <img src="asset/media/estudante.jpg" alt="">
+            <img src="asset/media/prof.jpg" alt="">
+        </div><br>
+        <div class="container-maskote">
+            <h2>Nesta jornada você será acompanhado pelos nossos amigos</h2><br>
+            <img src=" asset/Website-ui-img/maskote.png"alt="imagem maskote">
+        </div>
+        <br>
+        <h2>O que torna a <span style="color: blue">plataforma</span> única?</h2>
+        <section class="sec-text">
+            <div>
+                <h3><i class="fas fa-globe"></i> Acessível</h3>
+                <p>Alunos podem estudar a qualquer momento e de qualquer lugar desde que esteja conectado à
+                    internet.<br>
+                </p>
+            </div>
+            <div>
+                <h3><i class="fas fa-bolt"></i> Eficiência</h3>
+                <p>Reduz custos com materiais físicos e otimiza o tempo de ensino.</p>
+            </div>
+            <div>
+                <h3><i class="fas fa-gift"></i> Grátis</h3>
+                <p>Para todos os níveis de ensino que buscam aprender sobre temas específicos, de forma gratuita.</p>
+            </div>
+        </section>
+        <br>
+    </div>
 
-  <footer>
-    <p>&copy; 2024 Projeto EYK - Todos os direitos reservados a Transfortech</p>
-    <p>
-      <a href="https://www.instagram.com/trans_fortech" target="_blank" aria-label="Instagram Transfortech">
-        <img style="height: 40px;" src="asset/media/Instagram.png" alt="Instagram" />
-      </a>
-    </p>
-  </footer>
+    <footer>
+        <div
+            style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 20px; max-width: 1200px; margin: auto;">
+
+            <!-- Logotipo do Projeto -->
+            <div>
+                <img src="asset/media/logo-sem-fundo.png" alt="Logo Projeto EYK"
+                    style="height: 60px; margin-bottom: 10px;">
+                <p style="font-weight: bold;">Ekola ya kelela</p>
+            </div>
+
+            <!-- Logotipo da Empresa -->
+            <div>
+                <img src="asset/media/transfortech-logo-sem-fundo.png" alt="Logo Transfortech"
+                    style="height: 60px; margin-bottom: 10px;">
+                <p style="font-weight: bold;">Transfortech</p>
+            </div>
+
+            <!-- Links úteis -->
+            <div style="text-align: left;">
+                <p><a href="/sobre.html" style="color: #ccc; text-decoration: none;">Sobre</a></p>
+                <p><a href="/contato.html" style="color: #ccc; text-decoration: none;">Contato</a></p>
+                <p><a href="/politica-de-privacidade.html" style="color: #ccc; text-decoration: none;">Política de
+                        Privacidade</a></p>
+                <p><a href="/termos-de-uso.html" style="color: #ccc; text-decoration: none;">Termos de Uso</a></p>
+            </div>
+
+            <!-- Redes sociais -->
+            <div>
+                <p>Siga-nos:</p>
+                <a href="https://www.instagram.com/trans_fortech" target="_blank" aria-label="Instagram Transfortech">
+                    <img src="asset/media/Instagram.png" alt="Instagram" style="height: 30px; margin: 0 5px;">
+                </a>
+                <a href="https://www.linkedin.com/company/transfortech" target="_blank"
+                    aria-label="LinkedIn Transfortech">
+                    <img src="https://static.vecteezy.com/system/resources/previews/018/930/480/large_2x/linkedin-logo-linkedin-icon-transparent-free-png.png"
+                        alt="LinkedIn" style="height: 30px; margin: 0 5px;">
+                </a>
+            </div>
+        </div>
+
+        <hr style="margin: 30px auto; border: 0; height: 1px; background: #444; width: 90%;" />
+        <p style="font-size: 14px;">&copy; 2025 Projeto EYK - Todos os direitos reservados a Transfortech</p>
+    </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
