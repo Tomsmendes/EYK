@@ -23,7 +23,7 @@ class User extends Authenticatable
         'vc_nome',
         'email',
         'password',
-        'fc_id',
+        'vc_tipo',
         'photo',
     ];
 

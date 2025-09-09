@@ -12,8 +12,7 @@ class AuthController extends Controller
 {
     public function showRegisterForm()
     {
-        $funcoes = Funcao::all();
-        return view('Site.auth.register', compact('funcoes'));
+        return view('Site.auth.register');
     }
 
     public function login(Request $request)
@@ -25,7 +24,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->route('user.all');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
@@ -39,7 +38,6 @@ class AuthController extends Controller
             'vc_nome' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
-            'fc_id' => 'required|exists:funcaos,id',
             'photo' => 'nullable|mimes:png,jpg,jpeg|max:2048',
         ]);
 
@@ -55,12 +53,12 @@ class AuthController extends Controller
 
         $user = User::create($userData);
         Auth::login($user);
-        return redirect()->route('user.all');
+        return redirect()->route('home');
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }

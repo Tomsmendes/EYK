@@ -50,17 +50,6 @@
                     <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
                 </div>
                 <div class="form-group">
-                    <label for="fc_id">Função:</label>
-                    <select name="fc_id" id="fc_id" required class="form-control">
-                        <option value="">Selecione uma função</option>
-                        @foreach ($funcoes as $funcao)
-                            <option value="{{ $funcao->id }}" {{ old('fc_id') == $funcao->id ? 'selected' : '' }}>
-                                {{ $funcao->name_fc }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="photo">Foto:</label>
                     <input type="file" class="form-control" name="photo" id="photo" accept="image/*">
                 </div>

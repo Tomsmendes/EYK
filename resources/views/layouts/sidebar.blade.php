@@ -1,17 +1,5 @@
 <!-- Sidebar lateral (visível apenas em telas grandes) -->
-<div class="sidebar" style="
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #ffd700;
-    padding: 20px;
-    box-shadow: 4px 0 6px rgba(0,0,0,0.15);
-    border-right: 4px solid #c9a300;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-">
+<div class="sidebar">
 
     <!-- Logo -->
     <div style="text-align: center; margin-bottom: 30px;">
@@ -85,6 +73,21 @@
 <!-- CSS RESPONSIVO -->
 <style>
     /* Por padrão, esconde o menu inferior */
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: auto;
+        overflow-y: auto;
+        top: 0;
+        left: 0;
+        background-color: #ffd700;
+        padding: 20px;
+        box-shadow: 4px 0 6px rgba(0,0,0,0.15);
+        border-right: 4px solid #c9a300;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
     .bottom-nav {
         display: none;
         position: fixed;

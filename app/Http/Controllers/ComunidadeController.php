@@ -15,7 +15,7 @@ class ComunidadeController extends Controller
                     ->latest()
                     ->get();
 
-        return view('Site.Pages.comunidade.index', compact('posts'));
+        return view('Site.tipo.prof.comunidade.index', compact('posts'));
     }
 
     // Armazenar nova publicação

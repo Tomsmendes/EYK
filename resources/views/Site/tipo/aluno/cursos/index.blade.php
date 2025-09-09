@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('Site.tipo.layouts.home')
 
 @section('title', 'Listagem de Cursos')
 
 @section('content')
 <div class="container mt-5">
-    <h1>Listagem de Cursos</h1>
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#cursoModal" onclick="prepareModal('create', '{{ route('cursos.store') }}')">Novo Curso</button>
+    <h1 style="text-align:center" >Meus Cursos</h1>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -38,6 +37,8 @@
         </div>
     @endforeach
 </div>
+<button class="btn btn-primary mb-3 " data-bs-toggle="modal" data-bs-target="#cursoModal" onclick="prepareModal('create', '{{ route('cursos.store') }}')">Novo Curso</button>
+
 
     <!-- Modal -->
     <div class="modal fade" id="cursoModal" tabindex="-1" aria-labelledby="cursoModalLabel" aria-hidden="true">

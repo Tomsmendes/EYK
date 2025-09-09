@@ -1,4 +1,5 @@
-/*---------------HOME----------------*/
+/* Responsividade */
+
 /* Dispositivos muito pequenos (até 480px - celulares pequenos) */
 @media (max-width: 480px) {
     .landing {
@@ -15,39 +16,53 @@
     .welcome q, .welcome div {
         text-align: center;
     }
-    .welcome div{
+
+    .welcome div {
         display: none;
     }
 
-    nav {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar .logotype {
+        width: 60px;
+    }
+
+    .navbar .navbar-nav {
         flex-direction: column;
         align-items: center;
     }
 
-    nav img {
-        align-content: flex-start;
+    .navbar .nav-link {
+        margin: 0.5rem 0;
     }
 
-    nav a {
-        display: inline-block;
-        margin: 5px;
-        display: none;
+    .navbar .form-control {
+        width: 100%;
+        margin-bottom: 0.5rem;
     }
+
+    .navbar .btn-outline-success {
+        width: 100%;
+    }
+
+    .navbar .dropdown-toggle img {
+        width: 30px;
+        height: 30px;
+    }
+
     .btn-custom {
-    /* background-color: goldenrod; */
-    color: goldenrod;
-    border: 1px solid;
-    border-radius: 3rem;
-    padding: 5px 8px;
-    margin: 0 5px;
-    font-size: 16px;
-    transition: all 0.3s ease;
+        padding: 5px 8px;
+        font-size: 14px;
     }
-    .lead{
+
+    .lead {
         text-align: left;
     }
-    .login-lead{
-    display: block;
+
+    .login-lead {
+        display: block;
     }
 
     .sec-text {
@@ -78,9 +93,21 @@
         text-align: center;
     }
 
-    nav {
-        flex-direction: column;
-        align-items: center;
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar .navbar-nav {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .navbar .nav-link {
+        margin: 0 0.5rem;
+    }
+
+    .navbar .form-control {
+        width: 200px;
     }
 
     .sec-text {
@@ -103,6 +130,10 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .welcome h1 {
         font-size: 2.5rem;
+    }
+
+    .navbar .form-control {
+        width: 250px;
     }
 
     .sec-text {
@@ -138,6 +169,10 @@
         font-size: 3rem;
     }
 
+    .navbar .form-control {
+        width: 300px;
+    }
+
     .sec-text {
         display: flex;
         justify-content: space-around;
@@ -158,16 +193,11 @@
     }
 }
 
-/************LOGIN E REGISTRO**************************/
-/* Para tablets e celulares até 768px */
+/* Login e Registro */
 @media (max-width: 768px) {
     .container-login {
         flex-direction: column;
     }
-
-    /* .logo-login {
-        height: 200px;
-    } */
 
     video {
         display: none;
@@ -178,7 +208,6 @@
     }
 }
 
-/* Para celulares pequenos até 480px */
 @media (max-width: 480px) {
     .container {
         padding: 1.5rem 1rem;
@@ -200,8 +229,8 @@
         font-size: 0.95rem;
         padding: 0.6rem;
     }
-     video{
-        display: none;
-     }
-}
 
+    video {
+        display: none;
+    }
+}

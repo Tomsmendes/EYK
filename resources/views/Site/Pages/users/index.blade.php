@@ -44,8 +44,8 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Email</th>
-                            <th>Função</th>
                             <th>Foto</th>
+                            <th>tipos</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -55,7 +55,6 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->vc_nome }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->funcao->name_fc ?? 'Sem função' }}</td>
                                 <td>
                                     <div class="showPhoto">
                                         @if ($user->photo)
@@ -65,18 +64,18 @@
                                         @endif
                                     </div>
                                 </td>
+                                <td>{{ $user->vc_tipo }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#userModal"
-                                        onclick="prepareModal('edit', '{{ route('user.update', $user->id) }}', {!! json_encode([
+                                        onclick="prepareModal('edit', '{{ route('user.update', $user->id) }}', {{ json_encode([
                                             'id' => $user->id,
                                             'vc_nome' => $user->vc_nome,
                                             'email' => $user->email,
-                                            'fc_id' => $user->fc_id,
-                                            'photo' => $user->photo,
-                                        ]) !!})">
+                                            'photo' => $user->photo ? url('/Uploads/' . $user->photo) : null,
+                                        ]) }})">
                                         <i class="bx bx-edit-alt me-1"></i> Editar
                                     </button>
-                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" class="d-inline">
+                                    <form action="{{  route('user.delete', ['id'=>$user->id]) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">
@@ -126,22 +125,13 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="fc_id" class="form-label">Função</label>
-                                <select class="form-control" id="fc_id" name="fc_id" required>
-                                    <option value="">Selecione uma função</option>
-                                    @foreach ($funcoes as $funcao)
-                                        <option value="{{ $funcao->id }}">{{ $funcao->name_fc }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
                                 <label for="photo" class="form-label">Foto</label>
                                 <input type="file" class="form-control" name="photo" id="photoInput" accept=".png,.jpg,.jpeg" onchange="previewImage(event)">
                             </div>
 
                             <img id="photoPreview" src="#" alt="Pré-visualização da imagem"
                                 style="display: none; width: 150px; height: 150px; margin-top: 10px; border-radius: 8px; object-fit: cover;">
+                            <input type="hidden" name="existing_photo" id="existingPhoto" value="">
 
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </form>
@@ -160,17 +150,20 @@
             const passwordConfirmField = document.getElementById('password_confirmation');
             const photoPreview = document.getElementById('photoPreview');
             const photoInput = document.getElementById('photoInput');
+            const existingPhoto = document.getElementById('existingPhoto');
 
+            // Resetar o formulário e configurar a ação
             form.action = url;
             form.reset();
             photoPreview.style.display = 'none';
+            existingPhoto.value = '';
 
             if (mode === 'create') {
                 modalTitle.textContent = 'Novo Usuário';
                 formMethod.value = 'POST';
                 passwordField.required = true;
                 passwordConfirmField.required = true;
-            } else {
+            } else if (mode === 'edit') {
                 modalTitle.textContent = 'Editar Usuário';
                 formMethod.value = 'PUT';
                 passwordField.required = false;
@@ -179,26 +172,29 @@
                 if (user) {
                     document.getElementById('vc_nome').value = user.vc_nome || '';
                     document.getElementById('email').value = user.email || '';
-                    document.getElementById('fc_id').value = user.fc_id || '';
-
                     if (user.photo) {
-                        photoPreview.src = '/Uploads/' + user.photo;
+                        photoPreview.src = user.photo;
+                        photoPreview.style.display = 'block';
+                        existingPhoto.value = user.photo; // Armazena a foto existente
+                    } else {
+                        photoPreview.src = '{{ url("/media/avatar-default.png") }}';
                         photoPreview.style.display = 'block';
                     }
                 }
             }
 
+            // Limpar o input de arquivo
             photoInput.value = '';
         }
 
         function previewImage(event) {
             const input = event.target;
             const reader = new FileReader();
+            const photoPreview = document.getElementById('photoPreview');
 
             reader.onload = function () {
-                const imgElement = document.getElementById('photoPreview');
-                imgElement.src = reader.result;
-                imgElement.style.display = 'block';
+                photoPreview.src = reader.result;
+                photoPreview.style.display = 'block';
             };
 
             if (input.files && input.files[0]) {

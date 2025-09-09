@@ -30,7 +30,9 @@ class AulaController extends Controller
 
         Aula::create($request->all());
 
-        return redirect()->route('aulas.index')->with('success', 'Aula criada com sucesso!');
+        // Redirect back to the course details page with success message
+        return redirect()->route('cursos.show', $request->curso_id)
+                        ->with('success', 'Aula criada com sucesso!');
     }
 
     public function update(Request $request, Aula $aula)
@@ -43,13 +45,19 @@ class AulaController extends Controller
 
         $aula->update($request->all());
 
-        return redirect()->route('aulas.index')->with('success', 'Aula atualizada com sucesso!');
+        // Optionally redirect to the course details page instead of aulas.index
+        return redirect()->route('cursos.show', $aula->curso_id)
+                        ->with('success', 'Aula atualizada com sucesso!');
     }
 
     public function destroy(Aula $aula)
     {
+        $curso_id = $aula->curso_id; // Store curso_id before deletion
         $aula->delete();
-        return redirect()->route('aulas.index')->with('success', 'Aula excluída com sucesso!');
+        
+        // Redirect back to the course details page
+        return redirect()->route('cursos.show', $curso_id)
+                        ->with('success', 'Aula excluída com sucesso!');
     }
 
     public function indexNonNested()

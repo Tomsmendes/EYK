@@ -5,21 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CursoController extends Controller
 {
     public function index()
     {
         $data['cursos'] = Curso::join('users', 'cursos.user_id', '=', 'users.id')
-            ->select(
-                'cursos.*',
-                'users.vc_nome as user_name',
-            )
+            ->select('cursos.*', 'users.vc_nome as user_name')
             ->get();
 
-        $data['users'] = User::all(); // ou 'funcaos' dependendo da convenção do seu model
+        $data['users'] = User::all();
 
-        return view('Site.Pages.cursos.index', $data);
+        return view('Site.tipo.prof.cursos.index', $data);
+    }
+
+    public function show(Curso $curso)
+    {
+        $data['curso'] = Curso::join('users', 'cursos.user_id', '=', 'users.id')
+            ->select('cursos.*', 'users.vc_nome as user_name')
+            ->where('cursos.id', $curso->id)
+            ->firstOrFail();
+
+        return view('Site.tipo.prof.cursos.show', $data);
+    }
+
+    public function create()
+    {
+        $data['users'] = User::all();
+
+        return view('Site.tipo.prof.cursos.create', $data);
+    }
+
+    public function edit()
+    {
+        $data['users'] = User::all();
+
+        return view('Site.tipo.prof.cursos.edit', $data);
     }
 
     public function store(Request $request)
@@ -35,17 +57,20 @@ class CursoController extends Controller
             'duration' => 'nullable|integer'
         ]);
 
-        $filePath = public_path('uploads/cursos');
         $curso = new Curso();
         $curso->user_id = $request->user_id;
         $curso->description = $request->description;
         $curso->category = $request->category;
         $curso->status = $request->status;
         $curso->published_at = $request->published_at;
-        $curso->price = $request->price;
-        $curso->duration = $request->duration;
+        $curso->price = $request->price ?? 0.00; // Valor padrão
+        $curso->duration = $request->duration ?? 0;
 
         if ($request->hasFile('thumbnail')) {
+            $filePath = public_path('uploads/cursos');
+            if (!file_exists($filePath)) {
+                mkdir($filePath, 0755, true);
+            }
             $file = $request->file('thumbnail');
             $file_name = time() . '_' . $file->getClientOriginalName();
             $file->move($filePath, $file_name);
