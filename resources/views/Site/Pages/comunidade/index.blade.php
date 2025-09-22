@@ -10,7 +10,7 @@
         <!-- Cabeçalho -->
         <header class="header-comunidade">
             <h1>
-                <img class="logotype" src="{{ asset('media/maskote-semfundo.png') }}" alt="">
+                {{-- <img class="logotype" src="{{ asset('media/maskote-semfundo.png') }}" alt=""> --}}
                 Comunidade EYK
             </h1>
             <p class="subtitulo">Compartilhe o que aprendeu, jogue e interaja com outros estudantes!</p>

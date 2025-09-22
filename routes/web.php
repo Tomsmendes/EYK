@@ -11,7 +11,7 @@ use App\Http\Controllers\QuestionarioController;
 use App\Http\Controllers\PerguntaController;
 use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\FuncaoController;
-use App\Http\Controllers\OfensivaController;    
+use App\Http\Controllers\OfensivaController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\ComunidadeController;
 use App\Http\Controllers\PostLikeController;
@@ -63,7 +63,7 @@ Route::middleware(['auth', 'restrict.type:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'restrict.type:aluno'])->group(function () {
-   
+
 });
 
 Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
