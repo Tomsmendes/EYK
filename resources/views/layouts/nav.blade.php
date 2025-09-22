@@ -159,7 +159,7 @@
                 @endif
               </div>
               <div class="text-start ms-2">
-                <small style="color: goldenrod;" class="d-block">{{ Auth::user()->vc_nome }}</small>
+                <small class="d-block">{{ Auth::user()->vc_nome }}</small>
                 <small class="text-muted">{{ Auth::user()->email }}</small>
               </div>
             </button>
