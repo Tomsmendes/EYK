@@ -86,4 +86,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Página pública de vídeos (todos podem ver)
-Route::get('/videos', [VideoController::class, 'publicIndex'])->name('videos.public');
+Route::get('/biblioteca', [VideoController::class, 'publicIndex'])->name('videos.public');
