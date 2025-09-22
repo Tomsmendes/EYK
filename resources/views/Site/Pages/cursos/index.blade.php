@@ -20,9 +20,9 @@
                         <h5 class="card-title text-primary fw-bold">ID: {{ $curso->id }}</h5>
                         <p class="card-text"><strong>Descrição:</strong> {{ $curso->description }}</p>
                         <p class="card-text"><strong>Categoria:</strong> <span class="text-success">{{ $curso->category }}</span></p>
-                        <p class="card-text"><strong>Preço:</strong> <span class="text-danger">{{ number_format($curso->price, 2, ',', '.') }} €</span></p>
+                        <p class="card-text"><strong>Preço:</strong> <span class="text-danger">{{ number_format($curso->price, 2, ',', '.') }} Kz</span></p>
                         <p class="card-text"><strong>Duração:</strong> {{ $curso->duration }} min</p>
-                        <p class="card-text"><strong>Usuário:</strong> {{ $curso->user_name }}</p>
+                        <p class="card-text"><strong>Professor:</strong> {{ $curso->user_name }}</p>
                     </div>
                 </div>
             </a>

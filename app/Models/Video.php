@@ -10,14 +10,17 @@ class Video extends Model
     use HasFactory;
 
     protected $fillable = [
-        'aula_id',
-        'file_path',
-        'vd_name',
-        'vd_descricao'
+    'titulo',
+    'descricao',
+    'caminho_video',
+    'caminho_thumbnail',
+    'user_id',
+    'aula_id',
     ];
-
-    public function aula()
+    public function user()
     {
-        return $this->belongsTo(Aula::class);
+        return $this->belongsTo(User::class);
     }
+
+
 }

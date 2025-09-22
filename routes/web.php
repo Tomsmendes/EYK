@@ -79,3 +79,11 @@ Route::middleware(['auth', 'restrict.type:admin,prof,aluno'])->group(function ()
 Route::get('/unauthorized', function () { return ('Usuario Não Autorizado!'); })->name('unauthorized');
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
+    Route::get('/videos/create', [VideoController::class, 'create'])->name('videos.create');
+    Route::post('/videos', [VideoController::class, 'store'])->name('videos.store');
+});
+
+// Página pública de vídeos (todos podem ver)
+Route::get('/biblioteca', [VideoController::class, 'publicIndex'])->name('videos.public');

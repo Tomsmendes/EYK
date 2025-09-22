@@ -46,7 +46,7 @@
                                 <a class="nav-link" href="#">Comunidade</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Sobre</a>
+                                <a class="nav-link" href="{{ route('videos.public') }}">Videos</a>
                             </li>
                         @else
                             <li class="nav-item">
@@ -59,7 +59,7 @@
                                 <a class="nav-link" href="{{ route('comunidade') }}">Comunidade</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Sobre</a>
+                                <a class="nav-link" href="{{ route('videos.public') }}">Videos</a>
                             </li>
                         @endguest
                     </ul>
@@ -104,7 +104,7 @@
                                 </ul>
                             </div>
                         @else
-                            
+
                         @endauth
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                     <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" target="_blank">Entrar</a>
                     <a href="{{ Route('register') }}" class="btn btn-custom" target="_blank">Registar</a>
                 @else
-                    
+
                 @endguest
             </div>
         </div>

@@ -9,14 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->id();
-            $table->string('vd_name');
-            $table->string('file_path', 255);
-            $table->text('vd_descricao')->nullable();
-            $table->unsignedBigInteger('aula_id');
-            $table->timestamps();
-            $table->foreign('aula_id')->references('id')->on('aulas')->onDelete('cascade');
-        });
+        $table->id();
+        $table->string('titulo'); // título do vídeo
+        $table->text('descricao')->nullable(); // descrição
+        $table->string('caminho_video', 255); // caminho do arquivo do vídeo
+        $table->string('caminho_thumbnail', 255)->nullable(); // thumbnail opcional
+        $table->foreignId('user_id')->constrained()->onDelete('cascade'); // usuário que enviou
+        $table->foreignId('aula_id')->nullable()->constrained()->onDelete('cascade'); // agora opcional
+        $table->timestamps();
+    });
+
     }
 
     public function down(): void

@@ -78,7 +78,7 @@
         </div>
 
         <footer>
-        <p>&copy; 2024 Projeto EYK - Todos os direitos reservados</p>
+        <p>&copy; 2025 Projeto EYK - Todos os direitos reservados</p>
     </footer>
     </div>
 

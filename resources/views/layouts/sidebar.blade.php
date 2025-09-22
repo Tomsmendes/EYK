@@ -24,8 +24,13 @@
             </a>
         </li>
         <li class="nav-item mb-2">
+            <a class="nav-link text-white" href="{{ route('videos.create') }}">
+                <i class="fa fa-video me-2"></i> Criar Vídeo
+            </a>
+        </li>
+        <li class="nav-item mb-2">
             <a class="nav-link text-white" href="{{ route('videos.index') }}">
-                <i class="fa fa-video me-2"></i> Vídeos
+                <i class="fa fa-video me-2"></i>Meus Vídeos
             </a>
         </li>
         <li class="nav-item mb-2">
