@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container mt-5">
-    <h2>Vídeos</h2>
+    <h2>Para você</h2>
 
     <div class="row">
         @foreach($videos as $video)
@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $video->titulo }}</h5>
                         <p class="text-muted video-duration" id="duration-{{ $video->id }}">⏳ Carregando...</p>
-                        <p class="text-muted" >Professor: {{ $video->user->vc_nome }}</p>
+                        <p class="text-muted" >@ {{ $video->user->vc_nome }}</p>
                         <!-- Vídeo escondido só para pegar duração -->
                         <video id="video-{{ $video->id }}" hidden>
                             <source src="{{ asset('storage/'.$video->caminho_video) }}" type="video/mp4">
@@ -55,7 +55,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
       <div class="modal-body p-0">
-        <video id="videoPlayer" class="w-100" controls></video>
+        <video id="videoPlayer" class="w-100" controls controlsList="nodownload" oncontextmenu="return false;></video>
       </div>
     </div>
   </div>

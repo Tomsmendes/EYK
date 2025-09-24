@@ -187,7 +187,7 @@
 
   <!-- Conteúdo -->
   <div class="container content-container">
-  </br>
+  <div style="margin-bottom:8%" ></div>
     @yield('content')
   </div>
 
