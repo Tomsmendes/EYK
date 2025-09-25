@@ -123,7 +123,7 @@
           </li>
           @else
           <li class="nav-item">
-            <a class="nav-link" href="#">Casa</a>
+            <a class="nav-link" href="{{ route('casa.index') }}">Casa</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>

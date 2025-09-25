@@ -63,7 +63,6 @@
                                     <span>💬 ({{ $post->comentarios->count() }}) Comentários</span>
                                 </div>
 
-
                                 <!-- Comentários existentes -->
                                 <div class="comentarios" id="comentarios-{{ $post->id }}">
                                     @foreach ($post->comentarios->take(2) as $comentario)
@@ -104,6 +103,17 @@
                                 </form>
 
                                 <small class="data-post">{{ $post->created_at->diffForHumans() }}</small>
+
+                                <!-- Botão apagar (só aparece para o dono) -->
+                                @can('delete', $post)
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
+                                        onsubmit="return confirm('Tem certeza?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">🗑️ Apagar</button>
+                                    </form>
+                                @endcan
+
                             </div>
                         </div>
                     @endforeach

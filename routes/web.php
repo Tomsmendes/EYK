@@ -16,6 +16,8 @@ use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\ComunidadeController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\PostCommentController;
+use App\Http\Controllers\CasaController;
+
 
 Route::prefix('curso')->group(function () {
     Route::get('/', [CursoController::class, 'index'])->name('cursos.index');
@@ -87,3 +89,14 @@ Route::middleware(['auth'])->group(function () {
 
 // Página pública de vídeos (todos podem ver)
 Route::get('/biblioteca', [VideoController::class, 'publicIndex'])->name('videos.public');
+
+//
+Route::delete('/comunidade/{id}', [ComunidadeController::class, 'destroy'])->name('comunidade.destroy');
+
+//
+
+Route::get('/casa', [CasaController::class, 'index'])->name('casa.index');
+
+//
+
+Route::get('/perfil/{id}', [CasaController::class, 'show'])->name('perfil.show');

@@ -119,11 +119,11 @@
             <a class="nav-link" href="#">Comunidade</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Sobre</a>
+            <a class="nav-link" href="#">Videos</a>
           </li>
           @else
           <li class="nav-item">
-            <a class="nav-link" href="#">Casa</a>
+            <a class="nav-link" href="{{ route('casa.index') }}">Casa</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>

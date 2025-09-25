@@ -17,7 +17,7 @@ class Curso extends Model
         'thumbnail',
         'price',
         'duration',
-        'user_id'
+        'user_id',
     ];
 
     protected $casts = [

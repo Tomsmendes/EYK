@@ -80,7 +80,7 @@ class UserController extends Controller
             return back()->withErrors(['error' => 'Erro ao atualizar usuário: ' . $e->getMessage()])->withInput();
         }
     }
-
+    
     public function delete($id)
     {
         $users = User::where('id',$id)->first();
