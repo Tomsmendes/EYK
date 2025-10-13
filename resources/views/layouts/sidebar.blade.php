@@ -9,7 +9,7 @@
     <!-- Navegação -->
     <ul class="nav flex-column">
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="{{ route('user.all') }}">
+            <a class="nav-link text-white" href="{{ route('user.index') }}">
                 <i class="fa fa-users me-2"></i> Usuários
             </a>
         </li>
@@ -68,7 +68,7 @@
 
 <!-- Menu inferior (visível apenas em mobile) -->
 <div class="bottom-nav">
-    <a href="{{ route('user.all') }}"><i class="fa fa-users"></i></a>
+    <a href="{{ route('user.index') }}"><i class="fa fa-users"></i></a>
     <a href="{{ route('cursos.index') }}"><i class="fa fa-book"></i></a>
     <a href="{{ route('aulas.index') }}"><i class="fa fa-chalkboard"></i></a>
     <a href="{{ route('comunidade') }}"><i class="fa fa-comments"></i></a>

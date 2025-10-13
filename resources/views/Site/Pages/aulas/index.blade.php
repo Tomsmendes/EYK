@@ -19,7 +19,6 @@
             <tr>
                 <th>ID</th>
                 <th>Título</th>
-                <th>Ordem</th>
                 <th>Curso</th>
                 <th>Ações</th>
             </tr>
@@ -29,8 +28,7 @@
                 <tr>
                     <td>{{ $aula->id }}</td>
                     <td>{{ $aula->title }}</td>
-                    <td>{{ $aula->order }}</td>
-                    <td>{{ $aula->curso_description }}</td>
+                    <td>{{ $aula->curso_name }}</td>
                     <td>
                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#aulaModal"
                             onclick="prepareModal('edit', '{{ route('aulas.update', $aula) }}', {{ json_encode($aula) }})">
@@ -71,11 +69,6 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="order" class="form-label">Ordem</label>
-                            <input type="number" class="form-control" id="order" name="order" required>
-                        </div>
-
-                        <div class="mb-3">
                             <label for="curso_id" class="form-label">Curso</label>
                             <select class="form-control" name="curso_id" id="curso_id" required>
                                 @foreach($cursos as $curso)
@@ -109,7 +102,6 @@ function prepareModal(mode, url, aula = null) {
         formMethod.value = 'PUT';
         document.getElementById('title').value = aula.title;
         document.getElementById('description').value = aula.description || '';
-        document.getElementById('order').value = aula.order;
         document.getElementById('curso_id').value = aula.curso_id;
     }
 }

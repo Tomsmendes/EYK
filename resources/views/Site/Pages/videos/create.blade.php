@@ -1,68 +1,74 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container my-5">
-    <h2 class="mb-4">Upload de Vídeo</h2>
-
+<div class="container">
+    <h2>Upload Simples de Vídeo (até 500MB)</h2>
     <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    @csrf
 
-        {{-- Título --}}
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
-            <input type="text" class="form-control @error('titulo') is-invalid @enderror"
-                   name="titulo" value="{{ old('titulo') }}" required>
-            @error('titulo')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+    <div class="form-group">
+        <label>Título</label>
+        <input type="text" name="titulo" class="form-control" required>
+    </div>
 
-        {{-- Descrição --}}
-        <div class="mb-3">
-            <label for="descricao" class="form-label">Descrição</label>
-            <textarea class="form-control @error('descricao') is-invalid @enderror"
-                      name="descricao" rows="4">{{ old('descricao') }}</textarea>
-            @error('descricao')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+    <div class="form-group">
+        <label>Vídeo</label>
+        <input type="file" name="video" class="form-control" required>
+    </div>
 
-        {{-- Vídeo --}}
-        <div class="mb-3">
-            <label for="video" class="form-label">Selecione o vídeo</label>
-            <input type="file" class="form-control @error('video') is-invalid @enderror"
-                   name="video" accept="video/mp4,video/webm" required>
-            @error('video')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- Thumbnail --}}
-        <div class="mb-3">
-            <label for="thumbnail" class="form-label">Thumbnail (opcional)</label>
-            <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
-                   name="thumbnail" accept="image/*">
-            @error('thumbnail')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- Aula relacionada --}}
-        <div class="mb-4">
-            <label for="aula_id" class="form-label">Curso relacionado (opcional)</label>
-            <select class="form-select" name="aula_id" id="aula_id">
-                <option value="">Nenhum Curso</option>
-                @foreach ($aulas as $aula)
-                    <option value="{{ $aula->id }}" {{ old('aula_id') == $aula->id ? 'selected' : '' }}>
-                        {{ $aula->titulo }}
-                    </option>
+    {{-- Campo oculto com ID da aula (se existir) --}}
+    @if(isset($aulaId))
+        <input type="hidden" name="aula_id" value="{{ $aulaId }}">
+    @else
+        <div class="form-group">
+            <label>Aula</label>
+            <select name="aula_id" class="form-control">
+                <option value="">-- Selecione a aula --</option>
+                @foreach($aulas as $aula)
+                    <option value="{{ $aula->id }}">{{ $aula->titulo }}</option>
                 @endforeach
             </select>
         </div>
+    @endif
 
-        <button type="submit" class="btn btn-success">
-            <i class="bi bi-upload"></i> Enviar Vídeo
-        </button>
-    </form>
+    <button type="submit" class="btn btn-success mt-3">Salvar</button>
+</form>
 </div>
+
+<script>
+function updateProgress() {
+    const file = document.getElementById('videoFile').files[0];
+    if (file && file.size > 500 * 1024 * 1024) {
+        alert('Vídeo muito grande! Máx 500MB.');
+        return;
+    }
+    document.getElementById('progressBar').style.display = 'block';
+}
+
+// Progresso no submit (simples, via XMLHttpRequest)
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', this.action, true);
+
+    xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable) {
+            const percent = (e.loaded / e.total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+            document.getElementById('progressText').textContent = Math.round(percent) + '%';
+        }
+    };
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            window.location = "{{ route('videos.index') }}";
+        } else {
+            alert('Erro no upload.');
+        }
+    };
+
+    xhr.send(formData);
+});
+</script>
 @endsection

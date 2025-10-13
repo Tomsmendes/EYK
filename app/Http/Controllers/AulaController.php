@@ -10,13 +10,22 @@ class AulaController extends Controller
 {
     public function index()
     {
-        $data['aulas'] = Aula::join('cursos', 'aulas.curso_id', '=', 'cursos.id')
-            ->select('aulas.*', 'cursos.description as curso_description')
-            ->get();
+        $data['aulas'] = Aula::with('curso')->get();
+        return view('Site.tipo.prof.aulas.index', $data);
+    }
 
-        $data['cursos'] = Curso::all();
+    public function indexByCurso(Curso $curso)
+    {
+        $data['aulas'] = $curso->aulas()->with('curso')->get();
+        $data['curso'] = $curso->load('user');
 
-        return view('Site.Pages.aulas.index', $data);
+        return view('Site.tipo.prof.cursos.show', $data);
+    }
+
+    // CORREÇÃO: Receber curso como parâmetro
+    public function create(Curso $curso)
+    {
+        return view('Site.tipo.prof.aulas.create', compact('curso'));
     }
 
     public function store(Request $request)
@@ -24,15 +33,25 @@ class AulaController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'order' => 'required|integer',
             'curso_id' => 'required|exists:cursos,id',
         ]);
 
         Aula::create($request->all());
 
-        // Redirect back to the course details page with success message
         return redirect()->route('cursos.show', $request->curso_id)
                         ->with('success', 'Aula criada com sucesso!');
+    }
+
+    public function show(Aula $aula)
+    {
+        $aula->load('curso', 'videos', 'materiais');
+        return view('Site.tipo.prof.aulas.show', compact('aula'));
+    }
+
+    public function edit(Aula $aula)
+    {
+        $aula->load('curso');
+        return view('Site.tipo.prof.aulas.edit', compact('aula'));
     }
 
     public function update(Request $request, Aula $aula)
@@ -40,22 +59,19 @@ class AulaController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'order' => 'required|integer',
         ]);
 
         $aula->update($request->all());
 
-        // Optionally redirect to the course details page instead of aulas.index
         return redirect()->route('cursos.show', $aula->curso_id)
                         ->with('success', 'Aula atualizada com sucesso!');
     }
 
     public function destroy(Aula $aula)
     {
-        $curso_id = $aula->curso_id; // Store curso_id before deletion
+        $curso_id = $aula->curso_id;
         $aula->delete();
         
-        // Redirect back to the course details page
         return redirect()->route('cursos.show', $curso_id)
                         ->with('success', 'Aula excluída com sucesso!');
     }

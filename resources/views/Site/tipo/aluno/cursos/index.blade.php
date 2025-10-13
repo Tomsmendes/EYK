@@ -4,163 +4,70 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1 style="text-align:center" >Meus Cursos</h1>
+    <h1 class="text-center fw-bold mb-5" style="color: gold;">Todos os Cursos</h1>
 
     @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success text-center fw-semibold" style="background-color: #fff8e1; color: #c79a00; border: 1px solid gold;">
+            {{ session('success') }}
+        </div>
     @endif
-<div class="row row-cols-1 row-cols-md-4 g-4">
-    @foreach ($cursos as $curso)
-        <div class="col">
-            <a href="{{ route('cursos.show', $curso->id) }}" class="card-link">
-                <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden" style="transition: transform 0.2s;">
-                    <img src="{{ asset('uploads/cursos/' . $curso->thumbnail) }}" class="card-img-top" alt="{{ $curso->description }}" style="height: 150px; object-fit: cover;">
-                    <div class="card-body bg-light text-dark p-3">
-                        <h5 class="card-title text-primary fw-bold">ID: {{ $curso->id }}</h5>
-                        <p class="card-text"><strong>Descrição:</strong> {{ $curso->description }}</p>
-                        <p class="card-text"><strong>Categoria:</strong> <span class="text-success">{{ $curso->category }}</span></p>
-                        <p class="card-text"><strong>Preço:</strong> <span class="text-danger">{{ number_format($curso->price, 2, ',', '.') }} €</span></p>
-                        <p class="card-text"><strong>Duração:</strong> {{ $curso->duration }} min</p>
-                        <p class="card-text"><strong>Usuário:</strong> {{ $curso->user_name }}</p>
+
+    <div id="cursosCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach ($cursos->chunk(4) as $chunkIndex => $chunk)
+                <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
+                    <div class="row g-4 justify-content-center">
+                        @foreach ($chunk as $curso)
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <a href="{{ route('cursos.show', $curso->id) }}" class="text-decoration-none">
+                                    <div class="card h-100 shadow-lg border-0 rounded-4 overflow-hidden position-relative" 
+                                         style="background-color: #fffdf5; transition: all 0.3s ease; border: 2px solid transparent;">
+                                        
+                                        <img src="{{ asset('uploads/cursos/' . $curso->thumbnail) }}" 
+                                             class="card-img-top" 
+                                             alt="{{ $curso->description }}" 
+                                             style="height: 180px; object-fit: cover; border-bottom: 3px solid gold;">
+                                        
+                                        <div class="card-body text-center p-4">
+                                            <h5 class="card-title fw-bold mb-3" style="color: gold;">{{ $curso->name_curso }}</h5>
+                                            <p class="card-text mb-2">
+                                                <strong class="text-muted">Categoria:</strong>
+                                                <span style="color: darkgoldenrod; font-weight: 600;">{{ $curso->category }}</span>
+                                            </p>
+                                            <p class="card-text mb-0">
+                                                <strong class="text-muted">Usuário:</strong>
+                                                <span style="color: #333;">{{ $curso->user_name }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </a>
-            <div class="mt-2 d-flex justify-content-between">
-                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#cursoModal"
-                    onclick="prepareModal('edit', '{{ route('cursos.update', $curso) }}', {{ json_encode($curso) }})">Editar</button>
-                <form action="{{ route('cursos.destroy', $curso) }}" method="POST" class="d-inline ms-2">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">Excluir</button>
-                </form>
-            </div>
+            @endforeach
         </div>
-    @endforeach
-</div>
-<button class="btn btn-primary mb-3 " data-bs-toggle="modal" data-bs-target="#cursoModal" onclick="prepareModal('create', '{{ route('cursos.store') }}')">Novo Curso</button>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="cursoModal" tabindex="-1" aria-labelledby="cursoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="cursoForm" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="_method" id="formMethod" value="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="cursoModalLabel">Novo Curso</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="user_id" class="form-label">Usuário</label>
-                            <select class="form-select" id="user_id" name="user_id" required>
-                                <option value="">Selecione um usuário</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->vc_nome }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Descrição</label>
-                            <input type="text" class="form-control" id="description" name="description" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Categoria</label>
-                            <input type="text" class="form-control" id="category" name="category" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status" name="status" required>
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="published_at" class="form-label">Data de Publicação</label>
-                            <input type="date" class="form-control" id="published_at" name="published_at">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Preço</label>
-                            <input type="number" class="form-control" id="price" name="price" step="0.01">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="duration" class="form-label">Duração</label>
-                            <input type="text" class="form-control" id="duration" name="duration">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="thumbnail" class="form-label">Thumbnail</label>
-                            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*" onchange="previewThumbnail(event)">
-                        </div>
-
-                        <div class="mb-3 text-center">
-                            <img id="thumbnailPreview" src="#" alt="Pré-visualização da thumbnail" style="display: none; width: 150px; height: auto;">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#cursosCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: gold; border-radius: 50%; padding: 10px;"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#cursosCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: gold; border-radius: 50%; padding: 10px;"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
     </div>
-
-    <!-- JavaScript para preview e edição -->
-    <script>
-    function prepareModal(mode, url, curso = null) {
-        const form = document.getElementById('cursoForm');
-        const modalTitle = document.getElementById('cursoModalLabel');
-        const formMethod = document.getElementById('formMethod');
-        const preview = document.getElementById('thumbnailPreview');
-
-        form.action = url;
-        form.reset();
-        preview.style.display = 'none';
-        preview.src = "#";
-
-        if (mode === 'create') {
-            modalTitle.textContent = 'Novo Curso';
-            formMethod.value = 'POST';
-        } else {
-            modalTitle.textContent = 'Editar Curso';
-            formMethod.value = 'PUT';
-
-            document.getElementById('user_id').value = curso.user_id;
-            document.getElementById('description').value = curso.description;
-            document.getElementById('category').value = curso.category;
-            document.getElementById('status').value = curso.status;
-            document.getElementById('published_at').value = curso.published_at ? curso.published_at.split(' ')[0] : '';
-            document.getElementById('price').value = curso.price;
-            document.getElementById('duration').value = curso.duration;
-
-            if (curso.thumbnail) {
-                preview.src = `/uploads/cursos/${curso.thumbnail}`;
-                preview.style.display = 'block';
-            }
-        }
-    }
-
-    function previewThumbnail(event) {
-        const input = event.target;
-        const preview = document.getElementById('thumbnailPreview');
-
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    </script>
 </div>
+
+<style>
+    .card:hover {
+        transform: translateY(-8px);
+        border-color: gold;
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    }
+    .btn:hover {
+        background-color: darkgoldenrod !important;
+        transform: scale(1.05);
+    }
+</style>
 @endsection

@@ -50,7 +50,7 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Casa</a>
+                                <a class="nav-link" href="{{ route('user.index') }}">Casa</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
@@ -65,11 +65,9 @@
                     </ul>
 
                     <!-- Campo de Pesquisa -->
-                    <form class="d-flex mx-auto" style="max-width: 400px;">
-                        <input class="form-control me-2" type="search" placeholder="Pesquisar..." aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
+                    <form class="d-flex mx-auto" style="max-width: 400px;" method="GET" action="{{ route('cursos.index') }}">
+                        <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar por curso, categoria ou professor..." value="{{ request('search') }}">
+                        <button class="btn btn-outline-warning" type="submit"><i class="fa fa-search"></i></button>
                     </form>
 
                     <!-- Usuário -->
@@ -119,8 +117,8 @@
             <q>Ekola ya kelela, uma plataforma dedicada para o ensino especial.</q><br><br>
             <div>
                 @guest
-                    <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" target="_blank">Entrar</a>
-                    <a href="{{ Route('register') }}" class="btn btn-custom" target="_blank">Registar</a>
+                    <a href="{{ Route('login') }}" class="btn btn-custom" id="entrar" >Entrar</a>
+                    <a href="{{ Route('register') }}" class="btn btn-custom" >Registar</a>
                 @else
 
                 @endguest
@@ -143,7 +141,7 @@
                 <a href="{{ Route('register') }}" class="btn btn-custom" >Registar</a>
             @else
                 <span style="color:white; font-weight:bold;">Olá, {{ Auth::user()->vc_nome }}!</span>
-                <a href="{{ route('user.all') }}" class="btn btn-success">Site</a>
+                <a href="{{ route('user.index') }}" class="btn btn-success">Site</a>
                 <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-danger">Sair</button>

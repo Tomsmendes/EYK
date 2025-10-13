@@ -13,7 +13,6 @@ class Aula extends Model
         'curso_id',
         'title',
         'description',
-        'order'
     ];
 
     public function curso()
