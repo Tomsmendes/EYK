@@ -119,11 +119,11 @@
             <a class="nav-link" href="#">Comunidade</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Sobre</a>
+            <a class="nav-link" href="#">Videos</a>
           </li>
           @else
           <li class="nav-item">
-            <a class="nav-link" href="#">Casa</a>
+            <a class="nav-link" href="{{ route('casa.index') }}">Casa</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
@@ -187,7 +187,7 @@
 
   <!-- Conteúdo -->
   <div class="container content-container">
-  </br>
+  <div style="margin-bottom:8%" ></div>
     @yield('content')
   </div>
 
@@ -214,6 +214,7 @@
         <p><a href="/contato.html">Contato</a></p>
         <p><a href="/politica-de-privacidade.html">Política de Privacidade</a></p>
         <p><a href="/termos-de-uso.html">Termos de Uso</a></p>
+        <p><a href="https://forms.gle/gTyivLDPFzc6jTU59">Quero ser Professor</a></p>
       </div>
 
       <!-- Redes sociais -->

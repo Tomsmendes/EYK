@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Listagem de Cursos')
+@section('title', 'Cursos | EYK')
 
 @section('content')
 <div class="container mt-5">

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nav')
 
 @section('title', 'Comunidade | EYK')
 
@@ -10,7 +10,6 @@
         <!-- Cabeçalho -->
         <header class="header-comunidade">
             <h1>
-                <img class="logotype" src="{{ asset('media/maskote-semfundo.png') }}" alt="">
                 Comunidade EYK
             </h1>
             <p class="subtitulo">Compartilhe o que aprendeu, jogue e interaja com outros estudantes!</p>
@@ -30,7 +29,7 @@
                 <h2>📢 O que você aprendeu hoje?</h2>
                 <form action="{{ route('comunidade.store') }}" method="POST" class="form-publicacao">
                     @csrf
-                    <textarea name="conteudo" rows="3" placeholder="Escreva aqui o que aprendeu..."></textarea>
+                    <textarea name="conteudo" rows="3" placeholder="Partilhe aqui dúvidas, conquistas, reflexões..."></textarea>
                     <button type="submit">Partilhar</button>
 
                     @if (session('success'))
@@ -62,7 +61,6 @@
 
                                     <span>💬 ({{ $post->comentarios->count() }}) Comentários</span>
                                 </div>
-
 
                                 <!-- Comentários existentes -->
                                 <div class="comentarios" id="comentarios-{{ $post->id }}">
@@ -104,6 +102,17 @@
                                 </form>
 
                                 <small class="data-post">{{ $post->created_at->diffForHumans() }}</small>
+
+                                <!-- Botão apagar (só aparece para o dono) -->
+                                @can('delete', $post)
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
+                                        onsubmit="return confirm('Tem certeza?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">🗑️ Apagar</button>
+                                    </form>
+                                @endcan
+
                             </div>
                         </div>
                     @endforeach
@@ -117,7 +126,9 @@
             <!-- Jogos -->
             <section id="jogos" class="section">
                 <h2>🎮 Jogos</h2>
-                <div id="jogos-container"></div>
+                <div id="jogos-container">
+                    <h1>Em desenvolvimento...</h1>
+                </div>
             </section>
 
             <!-- Ranking -->
@@ -126,7 +137,6 @@
                 <ol>
                     <li><strong>Pedro Neto</strong> – 250 pontos</li>
                     <li><strong>Ana Mário</strong> – 210 pontos</li>
-                    <li><strong>Luís Quissola</strong> – 180 pontos</li>
                 </ol>
             </section>
 

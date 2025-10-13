@@ -114,10 +114,25 @@
           <li class="nav-item"><a class="nav-link" href="#">Comunidade</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
           @else
+<<<<<<< HEAD
           <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Casa</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('comunidade') }}">Comunidade</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('videos.public') }}">Vídeos</a></li>
+=======
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('casa.index') }}">Casa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('comunidade') }}">Comunidade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('videos.public') }}">Videos</a>
+          </li>
+>>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
           @endguest
         </ul>
 
@@ -183,10 +198,18 @@
       </div>
 
       <div style="text-align: left;">
+<<<<<<< HEAD
         <p><a href="#">Sobre</a></p>
         <p><a href="#">Contato</a></p>
         <p><a href="#">Política de Privacidade</a></p>
         <p><a href="#">Termos de Uso</a></p>
+=======
+        <p><a href="/sobre.html">Sobre</a></p>
+        <p><a href="/contato.html">Contato</a></p>
+        <p><a href="/politica-de-privacidade.html">Política de Privacidade</a></p>
+        <p><a href="/termos-de-uso.html">Termos de Uso</a></p>
+        <p><a href="https://forms.gle/gTyivLDPFzc6jTU59">Quero ser Professor</a></p>
+>>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
       </div>
 
       <div>

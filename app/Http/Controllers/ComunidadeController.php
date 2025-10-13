@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ComunidadePost;
+use App\Models\ComunidadePost;   // ✅ Importa o model correto
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class ComunidadeController extends Controller
 {
+    use AuthorizesRequests;
     // Exibir feed
     public function index()
     {
@@ -32,4 +35,22 @@ class ComunidadeController extends Controller
 
         return redirect()->back()->with('success', 'Publicação enviada com sucesso!');
     }
+
+    // Apagar publicação
+    public function destroy($id)
+{
+    $post = ComunidadePost::findOrFail($id);
+
+    if ($post->user_id !== auth()->id()) {
+        abort(403, 'Ação não autorizada.');
+    }
+
+    $post->delete();
+
+    return back()->with('success', 'Post apagado com sucesso!');
+}
+
+
+
+
 }

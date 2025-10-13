@@ -10,11 +10,18 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\QuestionarioController;
 use App\Http\Controllers\PerguntaController;
 use App\Http\Controllers\RespostaController;
+<<<<<<< HEAD
 use App\Http\Controllers\OfensivaController;    
+=======
+use App\Http\Controllers\FuncaoController;
+use App\Http\Controllers\OfensivaController;
+>>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\ComunidadeController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\PostCommentController;
+use App\Http\Controllers\CasaController;
+
 
 // Página inicial
 Route::get('/', function () { return view('home'); })->name('home');
@@ -75,6 +82,7 @@ Route::prefix('cursos')->group(function () {
     });
 });
 
+<<<<<<< HEAD
 // ==========================
 // AULAS INDEPENDENTES
 // ==========================
@@ -88,6 +96,10 @@ Route::prefix('aulas')->group(function () {
         Route::put('/{aula}', [AulaController::class, 'update'])->name('aulas.update');
         Route::delete('/{aula}', [AulaController::class, 'destroy'])->name('aulas.destroy');
     });
+=======
+Route::middleware(['auth', 'restrict.type:aluno'])->group(function () {
+
+>>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
 });
 
 // ==========================
@@ -224,5 +236,21 @@ Route::middleware(['auth', 'restrict.type:admin'])->group(function () {
     });
 });
 
+<<<<<<< HEAD
 // Página de acesso não autorizado
 Route::get('/unauthorized', fn() => 'Usuário Não Autorizado!')->name('unauthorized');
+=======
+// Página pública de vídeos (todos podem ver)
+Route::get('/biblioteca', [VideoController::class, 'publicIndex'])->name('videos.public');
+
+//
+Route::delete('/comunidade/{id}', [ComunidadeController::class, 'destroy'])->name('comunidade.destroy');
+
+//
+
+Route::get('/casa', [CasaController::class, 'index'])->name('casa.index');
+
+//
+
+Route::get('/perfil/{id}', [CasaController::class, 'show'])->name('perfil.show');
+>>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
