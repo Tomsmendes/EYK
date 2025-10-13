@@ -10,12 +10,8 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\QuestionarioController;
 use App\Http\Controllers\PerguntaController;
 use App\Http\Controllers\RespostaController;
-<<<<<<< HEAD
-use App\Http\Controllers\OfensivaController;    
-=======
 use App\Http\Controllers\FuncaoController;
 use App\Http\Controllers\OfensivaController;
->>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\ComunidadeController;
 use App\Http\Controllers\PostLikeController;
@@ -40,7 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::prefix('cursos')->group(function () {
     Route::get('/', [CursoController::class, 'index'])->name('cursos.index');
     Route::get('/{curso}', [CursoController::class, 'show'])->name('cursos.show');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/create', [CursoController::class, 'create'])->name('cursos.create');
@@ -55,13 +51,13 @@ Route::prefix('cursos')->group(function () {
     // ==========================
     Route::prefix('{curso}/aulas')->group(function () {
         Route::get('/', [AulaController::class, 'indexByCurso'])->name('cursos.aulas.index');
-        
+
         // Rotas apenas para professores e admin
         Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
             Route::get('/create', [AulaController::class, 'create'])->name('cursos.aulas.create');
             Route::post('/', [AulaController::class, 'store'])->name('cursos.aulas.store');
         });
-        
+
         // ==========================
         // MATERIAIS ANINHADOS EM AULAS
         // ==========================
@@ -69,7 +65,7 @@ Route::prefix('cursos')->group(function () {
             Route::get('/', [MaterialController::class, 'indexByAula'])->name('cursos.aulas.materiais.index');
             Route::get('/{material}', [MaterialController::class, 'show'])->name('cursos.aulas.materiais.show');
             Route::get('/{material}/download', [MaterialController::class, 'download'])->name('cursos.aulas.materiais.download');
-            
+
             // Rotas apenas para professores e admin
             Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
                 Route::get('/create', [MaterialController::class, 'create'])->name('cursos.aulas.materiais.create');
@@ -82,24 +78,23 @@ Route::prefix('cursos')->group(function () {
     });
 });
 
-<<<<<<< HEAD
 // ==========================
 // AULAS INDEPENDENTES
 // ==========================
 Route::prefix('aulas')->group(function () {
     Route::get('/', [AulaController::class, 'indexNonNested'])->name('aulas.index');
     Route::get('/{aula}', [AulaController::class, 'show'])->name('aulas.show');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/{aula}/edit', [AulaController::class, 'edit'])->name('aulas.edit');
         Route::put('/{aula}', [AulaController::class, 'update'])->name('aulas.update');
         Route::delete('/{aula}', [AulaController::class, 'destroy'])->name('aulas.destroy');
     });
-=======
-Route::middleware(['auth', 'restrict.type:aluno'])->group(function () {
+// =======
+// Route::middleware(['auth', 'restrict.type:aluno'])->group(function () {
 
->>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
+// >>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
 });
 
 // ==========================
@@ -109,7 +104,7 @@ Route::prefix('materiais')->group(function () {
     Route::get('/', [MaterialController::class, 'index'])->name('materiais.index');
     Route::get('/{material}', [MaterialController::class, 'show'])->name('materiais.show');
     Route::get('/{material}/download', [MaterialController::class, 'download'])->name('materiais.download');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/create', [MaterialController::class, 'create'])->name('materiais.create');
@@ -126,7 +121,7 @@ Route::prefix('materiais')->group(function () {
 Route::prefix('videos')->group(function () {
     Route::get('/', [VideoController::class, 'index'])->name('videos.index');
     Route::get('/{video}', [VideoController::class, 'show'])->name('videos.show');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/create', [VideoController::class, 'create'])->name('videos.create');
@@ -146,7 +141,7 @@ Route::get('/biblioteca', [VideoController::class, 'publicIndex'])->name('videos
 Route::prefix('questionarios')->group(function () {
     Route::get('/', [QuestionarioController::class, 'index'])->name('questionarios.index');
     Route::get('/{questionario}', [QuestionarioController::class, 'show'])->name('questionarios.show');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/create', [QuestionarioController::class, 'create'])->name('questionarios.create');
@@ -163,7 +158,7 @@ Route::prefix('questionarios')->group(function () {
 Route::prefix('perguntas')->group(function () {
     Route::get('/', [PerguntaController::class, 'index'])->name('perguntas.index');
     Route::get('/{pergunta}', [PerguntaController::class, 'show'])->name('perguntas.show');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/create', [PerguntaController::class, 'create'])->name('perguntas.create');
@@ -180,7 +175,7 @@ Route::prefix('perguntas')->group(function () {
 Route::prefix('respostas')->group(function () {
     Route::get('/', [RespostaController::class, 'index'])->name('respostas.index');
     Route::get('/{resposta}', [RespostaController::class, 'show'])->name('respostas.show');
-    
+
     // Rotas apenas para professores e admin
     Route::middleware(['auth', 'restrict.type:admin,prof'])->group(function () {
         Route::get('/create', [RespostaController::class, 'create'])->name('respostas.create');
@@ -236,10 +231,7 @@ Route::middleware(['auth', 'restrict.type:admin'])->group(function () {
     });
 });
 
-<<<<<<< HEAD
-// Página de acesso não autorizado
-Route::get('/unauthorized', fn() => 'Usuário Não Autorizado!')->name('unauthorized');
-=======
+
 // Página pública de vídeos (todos podem ver)
 Route::get('/biblioteca', [VideoController::class, 'publicIndex'])->name('videos.public');
 
@@ -253,4 +245,3 @@ Route::get('/casa', [CasaController::class, 'index'])->name('casa.index');
 //
 
 Route::get('/perfil/{id}', [CasaController::class, 'show'])->name('perfil.show');
->>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
