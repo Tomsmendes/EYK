@@ -114,12 +114,6 @@
           <li class="nav-item"><a class="nav-link" href="#">Comunidade</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
           @else
-<<<<<<< HEAD
-          <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Casa</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('comunidade') }}">Comunidade</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('videos.public') }}">Vídeos</a></li>
-=======
           <li class="nav-item">
             <a class="nav-link" href="{{ route('casa.index') }}">Casa</a>
           </li>
@@ -130,15 +124,15 @@
             <a class="nav-link" href="{{ route('comunidade') }}">Comunidade</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('videos.public') }}">Videos</a>
+            <a class="nav-link" href="{{ route('videos.public') }}">Vídeos</a>
           </li>
->>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
           @endguest
         </ul>
 
         <!-- 🔍 Pesquisa -->
         <form class="d-flex mx-auto" style="max-width: 400px;" method="GET" action="{{ route('cursos.index') }}">
-          <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar por curso, categoria ou professor..." value="{{ request('search') }}">
+          <input class="form-control me-2" type="search" name="search"
+            placeholder="Pesquisar por curso, categoria ou professor..." value="{{ request('search') }}">
           <button class="btn btn-outline-warning" type="submit"><i class="fa fa-search"></i></button>
         </form>
 
@@ -193,23 +187,17 @@
       </div>
 
       <div>
-        <img src="{{ asset('asset/media/transfortech-logo-sem-fundo.png') }}" alt="Logo Transfortech" style="height: 60px;">
+        <img src="{{ asset('asset/media/transfortech-logo-sem-fundo.png') }}" alt="Logo Transfortech"
+          style="height: 60px;">
         <p class="fw-bold">Transfortech</p>
       </div>
 
       <div style="text-align: left;">
-<<<<<<< HEAD
-        <p><a href="#">Sobre</a></p>
-        <p><a href="#">Contato</a></p>
-        <p><a href="#">Política de Privacidade</a></p>
-        <p><a href="#">Termos de Uso</a></p>
-=======
         <p><a href="/sobre.html">Sobre</a></p>
         <p><a href="/contato.html">Contato</a></p>
         <p><a href="/politica-de-privacidade.html">Política de Privacidade</a></p>
         <p><a href="/termos-de-uso.html">Termos de Uso</a></p>
         <p><a href="https://forms.gle/gTyivLDPFzc6jTU59">Quero ser Professor</a></p>
->>>>>>> a8dcb6eaa9105b060fbf8c2d91853bd393a587b1
       </div>
 
       <div>
@@ -218,7 +206,8 @@
           <img src="{{ asset('asset/media/Instagram.png') }}" alt="Instagram" style="height: 30px; margin: 0 5px;">
         </a>
         <a href="https://www.linkedin.com/company/transfortech" target="_blank">
-          <img src="https://static.vecteezy.com/system/resources/previews/018/930/480/large_2x/linkedin-logo-linkedin-icon-transparent-free-png.png"
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/018/930/480/large_2x/linkedin-logo-linkedin-icon-transparent-free-png.png"
             alt="LinkedIn" style="height: 30px; margin: 0 5px;">
         </a>
       </div>

@@ -23,7 +23,7 @@ use App\Http\Controllers\CasaController;
 Route::get('/', function () { return view('home'); })->name('home');
 
 // Autenticação
-Route::get('/logar', fn() => view('Site.tipo.auth.login'))->name('login');
+Route::get('/logar', fn() => view('Site.tipo.auth.login'))->name('login'); 
 Route::get('/registrar', fn() => view('Site.tipo.auth.register'))->name('register');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');

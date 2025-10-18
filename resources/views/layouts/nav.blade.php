@@ -132,7 +132,7 @@
             <a class="nav-link" href="{{ route('comunidade') }}">Comunidade</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('videos.public') }}">Videos</a>
+            <a class="nav-link" href="{{ route('videos.public') }}">Videeos</a>
           </li>
           @endguest
         </ul>
